@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="noindex">
 <title>Elite Tech — Cold Caller Trainer</title>
 <style>
   :root{
@@ -134,19 +134,20 @@
     <button class="nav-btn active" data-view="cards"><span class="ico">🃏</span> Flashcards</button>
     <button class="nav-btn" data-view="quiz"><span class="ico">✅</span> Quiz</button>
     <button class="nav-btn" data-view="packages"><span class="ico">📦</span> Packages</button>
-    <div class="side-foot">Study these until the pivots are automatic. The goal isn't reading a script — it's <b style="color:var(--text)">knowing why it works.</b></div>
+    <div class="side-foot">Two steps: the cold call <b style="color:var(--text)">books the meeting</b>, the meeting <b style="color:var(--text)">closes the deal</b>. Study until the pivots are automatic — the goal isn't reading a script, it's <b style="color:var(--text)">knowing why it works.</b></div>
   </nav>
 
   <main class="main">
     <!-- ============ FLASHCARDS ============ -->
     <section class="view active" id="cards">
       <h1>Flashcards</h1>
-      <p class="sub">Tap a card to flip. Learn the concept, then the rebuttal.</p>
+      <p class="sub">Tap a card to flip. Learn the concept, then the exact words.</p>
       <div class="deck-tabs">
         <button class="deck-tab active" data-deck="concepts">Core Concepts</button>
-        <button class="deck-tab" data-deck="callflow">The Call</button>
+        <button class="deck-tab" data-deck="coldcall">The Cold Call</button>
+        <button class="deck-tab" data-deck="meeting">The Meeting</button>
         <button class="deck-tab" data-deck="products">What We Sell</button>
-        <button class="deck-tab" data-deck="objections">Objection Pivots</button>
+        <button class="deck-tab" data-deck="objections">Objections</button>
       </div>
       <div class="card" id="flashcard" onclick="flip()">
         <div class="side-label" id="sideLabel">Front · tap to flip</div>
@@ -176,9 +177,13 @@
       <div class="pkg" style="border-color:var(--accent)">
         <h3>Quick facts — come up on every call</h3>
         <ul>
-          <li><b style="color:var(--text)">Delivery speed:</b> 7 to 14 days to a fully published, live website. A big chunk of that is just waiting on him to send photos, logo, and content — the faster he gets those to us, the faster he's live.</li>
+          <li><b style="color:var(--text)">The process:</b> The cold call's ONLY job is to book a short meeting (about 15 min). You diagnose, pitch, and close in the MEETING — never on the cold call.</li>
+          <li><b style="color:var(--text)">Build fee + monthly:</b> Every monthly tier is a one-time build fee PLUS a monthly (e.g. "$500 to build, then $97 a month"). Say it clearly — the build is once, the monthly keeps the system running.</li>
+          <li><b style="color:var(--text)">Delivery speed:</b> 7 to 14 days to a live website. A big chunk is just waiting on him to send photos, logo, and content — the faster he sends them, the faster he's live.</li>
           <li><b style="color:var(--text)">Contract:</b> No contract, ever. Month-to-month, cancel anytime.</li>
-          <li><b style="color:var(--text)">Client count:</b> Early stage — Polished by Glizzy &amp; Glam is the first real client. Own that honestly (see the "who have you done this for" objection card) — don't inflate it.</li>
+          <li><b style="color:var(--text)">If he cancels:</b> On the monthly plans he's renting a system we host and run — cancel and the site comes down. Only <b style="color:var(--text)">Complete Ownership ($3,500)</b> means he keeps it. Never pretend a monthly site is his to keep.</li>
+          <li><b style="color:var(--text)">No paid ads:</b> We do NOT run Facebook or Google ads. We get him found (Google + reviews) and make sure no lead slips. Don't promise ads.</li>
+          <li><b style="color:var(--text)">Client count:</b> Early stage — Polished by Glizzy &amp; Glam is the first real client. Own that honestly (see the "who have you done this for" card) — don't inflate it.</li>
         </ul>
       </div>
       <p class="sub" style="margin-top:22px">Each tier answers a different question: does he look professional, does he get found, does every lead get chased, or does he want to own it outright. Diagnose which one he's missing before you pitch.</p>
@@ -190,6 +195,12 @@
 /* ============ DATA ============ */
 const concepts = [
   { k:"Core Concept",
+    front:"What is Elite Tech Marketing? (so you can answer 'who are you?')",
+    back:"<span class='lead'>We build websites and lead systems for local contractors.</span> We're new and growing — you'd be one of our first clients, at a better price than we'll charge later. <b>Own that honestly:</b> 'We're a marketing company for contractors — websites, Google, and a system that catches every lead. Honestly, you're getting in early.' Small is an advantage: you get the founder's full attention, not a ticket number. Never inflate the company." },
+  { k:"Core Concept",
+    front:"The two-step play — why we book a meeting instead of closing on the call",
+    back:"<span class='lead'>The cold call is NOT where you sell. Its ONE job is to book a short meeting.</span> Why: a contractor on a roof can't make a real decision in 60 seconds, and you can't diagnose him or show value in that window. So on the call you spark interest and lock a specific time — then you diagnose, pitch, and close in the <b>meeting.</b> Trying to close on the cold call is how you lose the deal." },
+  { k:"Core Concept",
     front:"Why does a contractor even need a website?",
     back:"<span class='lead'>It's a 24/7 salesman.</span> When someone needs a roofer at 9pm, they Google it. If you don't show up looking professional, you don't exist to that customer — the job goes to the guy who does. A site isn't decoration, it's how you get found and how you win trust before you ever pick up the phone." },
   { k:"Core Concept",
@@ -197,49 +208,73 @@ const concepts = [
     back:"<span class='lead'>Most contractors miss half their calls</span> — they're on a roof, driving, under a sink. A missed call is a lost job, because the customer just calls the next guy. Our system <b>auto-texts anyone whose call you miss</b> ('Hey, saw I missed you — what do you need?'). You catch the lead instead of losing it. This is the single biggest money-leak we plug." },
   { k:"Core Concept",
     front:"What does the GoHighLevel system actually DO?",
-    back:"<span class='lead'>It's the follow-up engine so no lead slips.</span> One dashboard that: texts back missed calls, tracks every lead through a pipeline (New → Contacted → Booked → Won), sends automatic follow-up texts/emails, and <b>asks happy customers for a Google review automatically.</b> Ads and websites get the phone to ring — this makes sure nothing falls through the cracks after it does." },
+    back:"<span class='lead'>It's the follow-up engine so no lead slips.</span> One dashboard that: texts back missed calls, tracks every lead through a pipeline (New → Contacted → Booked → Won), sends automatic follow-up texts/emails, reminds customers of appointments, and <b>asks happy customers for a Google review automatically.</b> Websites get the phone to ring — this makes sure nothing falls through the cracks after it does." },
   { k:"Core Concept",
     front:"How do we actually get a contractor found / ranked on Google?",
-    back:"<span class='lead'>Reviews + local keywords.</span> Google ranks businesses with more recent reviews higher — so our review-automation system pumps up their review count on autopilot. On top of that we target the <b>keywords for their exact service area</b> ('roofer in [town]') so the right local customers find them. More reviews + local SEO = you climb the map." },
+    back:"<span class='lead'>Reviews + local keywords.</span> Google ranks businesses with more recent reviews higher — so our review-automation system pumps up their review count on autopilot. On top of that we target the <b>keywords for their exact service area</b> ('roofer in [town]') so the right local customers find them. More reviews + local SEO = you climb the map. <b>Note: this is organic — we do NOT run paid ads.</b>" },
   { k:"Core Concept",
     front:"The value ladder — why are there 4 different packages?",
     back:"<span class='lead'>Each price buys a different outcome.</span> $500 = look professional online. $750 = get found + capture leads (domain, Google, forms). $1,000 = automate all the follow-up so no lead slips (the GoHighLevel system). $3,500 = pay once and own it forever. You match the package to what the contractor's actually missing — don't pitch all four, diagnose then prescribe." },
   { k:"Core Concept",
     front:"The ROI math — how do you make the price feel small?",
-    back:"<span class='lead'>One job pays for a year.</span> A roof or HVAC job is $5,000–$15,000. The whole system is under $300/mo. If it gets them <b>ONE extra job all year</b>, it's already paid for itself many times over. Reframe it: it's not a cost, it's a salesman working 24/7 for less than minimum wage. Always do this math out loud on the call." },
+    back:"<span class='lead'>One job pays for a year.</span> A roof or HVAC job is $5,000–$15,000. The whole system is under $300/mo. If it gets them <b>ONE extra job all year</b>, it's already paid for itself many times over. Reframe it: it's not a cost, it's a salesman working 24/7 for less than minimum wage. Always do this math out loud in the meeting." },
   { k:"Core Concept",
     front:"How does the BUNDLING work? (each package vs the next)",
     back:"<span class='lead'>The tiers stack — each one is everything below it PLUS one big new thing.</span> Essential = the website. Growth = that website + get-found tools (domain, Google, more forms). Business Elite = all of that + the full GoHighLevel automation. Ownership is the odd one out — it's a one-time buy-it-outright, no monthly. So you never re-explain the whole thing: 'it's everything in the last one, plus ___.'" },
   { k:"Core Concept",
-    front:"How long until a contractor's website is actually live?",
-    back:"<span class='lead'>7 to 14 days to fully published.</span> Not months. The main thing that slows it down is the client — we need his photos, logo, and content. Set that expectation on the call: 'The faster you get me your pictures and details, the faster you're live — usually a week to two.' Under-promise, then beat it." },
+    front:"Build fee vs. monthly — what exactly is he paying?",
+    back:"<span class='lead'>Two numbers, and you must say both clearly.</span> Every monthly tier is a <b>one-time build fee</b> to make the site, PLUS a <b>monthly fee</b> to keep it running. Example: 'It's $500 to build your site, then $97 a month after that.' Don't let him think the monthly is the whole cost, or that the build fee is forever. Ownership ($3,500) is the only one with NO monthly — you pay once and own it." },
   { k:"Core Concept",
     front:"Why is there a MONTHLY fee — what's he paying for every month?",
-    back:"<span class='lead'>The monthly keeps the machine running, not just the site up.</span> Hosting, security, and edits, PLUS the automation actually working month after month — the text-backs firing, the review requests going out, the pipeline running, leads getting captured. A website you build once and abandon dies. The monthly is what makes it a system that keeps working, not a brochure that gathers dust." },
+    back:"<span class='lead'>The monthly keeps the machine running, not just the site up.</span> Hosting, security, a regular site check so it never breaks, edits whenever he needs them, PLUS the automation actually working month after month — the text-backs firing, the review requests going out, the pipeline running, leads getting captured. A website you build once and abandon dies. The monthly is what makes it a system that keeps working, not a brochure that gathers dust." },
   { k:"Core Concept",
-    front:"He said YES — now what? (the onboarding, so you don't freeze)",
-    back:"<span class='lead'>Make it feel easy and hands-off. Say this:</span> 'Awesome — here's exactly what happens next. I'll send you a quick form: your business info, the pages you want, your colors and logo. You send me that plus a few photos of your work, and I take it from there. Within 7 to 14 days your site's live — you just review it and I make any tweaks.' <b>Then actually send the onboarding form and confirm you got his photos/logo.</b> The whole promise is: he does 10 minutes of stuff, we do everything else." },
+    front:"How long until a contractor's website is actually live?",
+    back:"<span class='lead'>7 to 14 days to fully published.</span> Not months. The main thing that slows it down is the client — we need his photos, logo, and content. Set that expectation: 'The faster you get me your pictures and details, the faster you're live — usually a week to two.' Under-promise, then beat it." },
 ];
 
-const callflow = [
-  { k:"The Call · Step 1",
-    front:"The Opener — how to start so he doesn't hang up",
-    back:"<span class='lead'>Be upfront, ask permission, buy 20 seconds.</span> 'Hey [name], this is [your name] with Elite Tech — I'll be honest, this is a cold call. Give me 20 seconds and if it's not for you, I'll let you go. Fair enough?' … (yes) 'I help contractors around [town] show up on Google and stop losing jobs to missed calls.' <b>Honesty disarms them. The permission question gets a small yes that keeps them on.</b>" },
-  { k:"The Call · Step 2",
-    front:"Discovery — the 3 questions that tell you which package to pitch",
-    back:"<span class='lead'>Diagnose before you prescribe. Ask:</span> 1) 'Do you have a website right now — and is it actually bringing you jobs?' 2) 'When a call comes in and you can't grab it, what happens to that lead?' 3) 'Are you trying to get more jobs, or mostly just look more professional?' <b>No site → Essential. Not getting found → Growth. Losing leads / missed calls → Business Elite.</b> Let his answers pick the tier." },
-  { k:"The Call · Step 3",
-    front:"The Transition — from listening to pitching",
-    back:"<span class='lead'>Feed his own words back, then prescribe ONE tier.</span> 'Okay, so you've got the work but you're missing calls when you're on a job — that's exactly the leak I fix. Here's what I'd put you in and why…' Then pitch <b>only the package that matches</b>, not all four. Tie every feature to the problem he just told you about." },
-  { k:"The Call · Step 4",
-    front:"The Close — ask for it and then be quiet",
-    back:"<span class='lead'>Assume the sale, name the price, offer to start now.</span> 'So the site plus the missed-call text-back is [price]. I've actually got time to get you started this week — want me to send the quick onboarding form and get the ball rolling?' <b>Then STOP talking.</b> Whoever speaks first after the ask loses. Let the silence sit — don't fill it by re-pitching or discounting." },
-  { k:"The Call · Step 5",
-    front:"If it's a \"not right now\" — lock the next step, don't chase",
-    back:"<span class='lead'>Never leave it vague. Get a concrete next step.</span> 'No problem. When's better for you — I'll call you back Thursday morning, or would afternoon work?' Or: 'I'll text you the info right now — can you take 2 minutes to look tonight and I'll follow up tomorrow at 10?' <b>A booked callback beats a 'maybe later' every time.</b> Vague = dead." },
-  { k:"The Call · Step 6",
-    front:"He said YES — do THIS exactly (don't fumble the handoff)",
-    back:"<span class='lead'>Two things, in order, while you're still on the phone:</span> <b>1) Payment</b> — text him the Stripe link to lock it in: 'I'll text you the secure payment link right now — once that's in, we get started.' <b>2) Onboarding form</b> — then send <b>elitetechmarketing.com/onboarding</b>: 'This quick form gets me your business info, pages, logo and photos — about 10 minutes.' <b>Confirm he got both texts before you hang up.</b> Money first, then the form.<br><br><span style='color:#f0883e'>⚠️ Brandon: paste the real Stripe link(s) here</span> — one per package or a single deposit link. Right now the URL is a blank; tell Claude and it drops in." },
+const coldcall = [
+  { k:"Cold Call · Step 1",
+    front:"The Opener — first 20 seconds (goal: earn a meeting, not sell)",
+    back:"<span class='lead'>Be upfront, ask permission, buy 20 seconds.</span> 'Hey [name], this is [your name] with Elite Tech Marketing — I'll be honest, this is a cold call. Give me 20 seconds and if it's not for you I'll let you go, fair enough?' … (yes) 'I help contractors around [town] show up on Google and stop losing jobs to missed calls.' <b>Honesty disarms them. And remember — the cold call's ONLY job is to book a short meeting, not to close.</b>" },
+  { k:"Cold Call · Step 2",
+    front:"Light discovery — find ONE nerve (keep it short)",
+    back:"<span class='lead'>You're not diagnosing the whole business yet — you just need one real problem to hook the meeting.</span> Ask one or two: 'Do you have a website that's actually bringing you jobs?' / 'When you're on a job and miss a call, what happens to that lead?' The moment he admits a leak — 'yeah, I miss a ton of calls' — <b>that's your reason for the meeting.</b> Don't full-pitch here." },
+  { k:"Cold Call · Step 3",
+    front:"The ask — book the meeting off the problem he just named",
+    back:"<span class='lead'>Feed his own words back, then ask for a short, specific meeting.</span> 'So you're losing calls when you're on a roof — that's exactly what I fix. I don't want to do this over a cold call; let me show you exactly what it'd look like for [business]. I've got 15 minutes Thursday at 2, or would Friday morning be better?' <b>Offer two times — way easier to say yes to than 'when are you free?'</b>" },
+  { k:"Cold Call · Step 4",
+    front:"Lock it down — make the meeting actually happen",
+    back:"<span class='lead'>A vague 'sure, sometime' is a no. Pin the details:</span> exact day + time, the best number or email, and how it'll happen (quick phone or video call, ~15 min). 'Perfect — Thursday 2pm, I'll call this number. I'll text you a confirmation right now so it's in your phone.' <b>Then actually send that text.</b> A booked, confirmed time IS the win of the cold call." },
+  { k:"Cold Call · Step 5",
+    front:"\"Just tell me what it costs\" — on the COLD call",
+    back:"<span class='lead'>Give a range so you're honest, anchor the value, then steer back to the meeting.</span> 'Totally fair — it runs from around $500 to set up on the low end, up to a full lead system, depending on what you actually need. That's exactly why I want 15 minutes — so I'm not selling you stuff you don't need, I'll show you the one that fits. Thursday 2 still work?' <b>Don't full-pitch or lock one price on the dial — that's the meeting's job.</b>" },
+  { k:"Cold Call · Step 6",
+    front:"Make sure he SHOWS UP — confirm + set the frame",
+    back:"<span class='lead'>Most booked meetings die from no-shows. Prevent it:</span> text a confirmation immediately, keep it short ('Confirmed — Thu 2pm, talk then. – [name], Elite Tech'), and set the expectation: 'It's quick, about 15 minutes, I'll walk you through exactly how it works — no pressure.' The day before, a quick 'still good for tomorrow at 2?' text locks it in. <b>A confirmed meeting beats a booked-and-forgotten one.</b>" },
+];
+
+const meeting = [
+  { k:"The Meeting · Step 1",
+    front:"Open the meeting — rebuild rapport + set the agenda",
+    back:"<span class='lead'>Don't dive straight into pitching. Reset and frame it.</span> 'Appreciate you making the time. Quick plan: I'll ask you a couple questions about how you get jobs now, then show you exactly what I'd set up and what it costs — should take about 15 minutes. Sound good?' <b>This lowers his guard and earns permission to ask real questions.</b>" },
+  { k:"The Meeting · Step 2",
+    front:"Full discovery — the 3 questions that pick the package",
+    back:"<span class='lead'>NOW you diagnose properly. Ask:</span> 1) 'Do you have a website right now — and is it actually bringing you jobs?' 2) 'When a call comes in and you can't grab it, what happens to that lead?' 3) 'Are you trying to get more jobs, or mostly just look more professional?' <b>No site → Essential. Not getting found → Growth. Losing leads / missed calls → Business Elite.</b> Let his answers pick the tier." },
+  { k:"The Meeting · Step 3",
+    front:"Prescribe ONE package — feed his own words back",
+    back:"<span class='lead'>Don't pitch all four. Pick the one that solves what he just told you.</span> 'Okay, so you've got the work but you're missing calls when you're on a job — that's exactly the leak I fix. Here's what I'd put you in and why…' Then walk ONLY that tier, tying every feature to his problem. <b>Diagnose, then prescribe — like a doctor, not a menu.</b>" },
+  { k:"The Meeting · Step 4",
+    front:"Make the price feel small — do the math out loud",
+    back:"<span class='lead'>One job pays for a year.</span> 'What's one roof or HVAC job worth to you — five, ten grand? This runs under $300 a month. If it lands you ONE extra job all year, it's already paid for itself many times over. It's a salesman working 24/7 for less than minimum wage.' <b>Always say this BEFORE you name the price — it reframes the number before he hears it.</b>" },
+  { k:"The Meeting · Step 5",
+    front:"The Close — ask for it, then SHUT UP",
+    back:"<span class='lead'>Assume the sale, name the price, offer to start now.</span> 'So the site plus the missed-call text-back is [price] to build, then [price]/mo. I've got time to get you started this week — want me to send the payment link and the quick onboarding form and get the ball rolling?' <b>Then STOP talking.</b> Whoever speaks first after the ask loses. Let the silence sit — don't fill it by re-pitching or discounting." },
+  { k:"The Meeting · Step 6",
+    front:"He said YES — payment first, then onboarding (don't fumble it)",
+    back:"<span class='lead'>Two things, in order, while you're still with him:</span> <b>1) Payment</b> — send the Stripe link to lock it in: 'I'll send the secure payment link right now — once that's in, we get started.' <b>2) Onboarding form</b> — then send <b>elitetechmarketing.com/onboarding</b>: 'This quick form gets me your business info, pages, logo and photos — about 10 minutes. Fast as you get me that, faster you're live — usually 7 to 14 days.' <b>Confirm he got both before you wrap up.</b> Money first, then the form.<br><br><span style='color:#f0883e'>⚠️ Brandon: paste the real Stripe link(s) here</span> — one per package or a single deposit link. Right now the URL is a blank; tell Claude and it drops in." },
+  { k:"The Meeting · Step 7",
+    front:"\"I need to think about it\" — isolate the REAL objection",
+    back:"<span class='lead'>'Think about it' hides the real reason. Find it:</span> 'Totally fair. Quick question so I know I explained it right — is it the price you'd want to sit with, or whether it'll actually work for you?' … then handle THAT objection right now. If he still needs time, lock a specific follow-up: 'I'll call you Thursday at 10 so it's fresh.' <b>Never let it end on a vague 'I'll think about it.'</b>" },
 ];
 
 const products = [
@@ -262,6 +297,9 @@ const products = [
     front:"Review Automation",
     back:"<span class='lead'>Turns happy jobs into Google reviews on autopilot.</span> Part of GoHighLevel. After a job, it automatically asks the customer for a review. More recent reviews = higher Google ranking = more calls. It's the engine behind our 'we'll help you rank higher' promise." },
   { k:"What We Sell",
+    front:"Appointment Reminders",
+    back:"<span class='lead'>Kills no-shows automatically.</span> Part of the GoHighLevel system (Business Elite). Once a job or estimate is booked, it auto-texts the customer a reminder before the appointment — so they actually show up and he isn't driving out to an empty house. Small automation, real money saved." },
+  { k:"What We Sell",
     front:"Lead Nurture (auto texts + emails)",
     back:"<span class='lead'>Follows up so he doesn't have to.</span> Business Elite. A new lead that doesn't book right away gets automatic, friendly follow-up texts and emails over the next few days. Most sales come from follow-up nobody does — this does it automatically." },
   { k:"What We Sell",
@@ -274,8 +312,20 @@ const objections = [
     front:"\"I already have a website.\"",
     back:"<span class='lead'>Great — is it actually bringing you jobs?</span> Most contractor sites are just a digital business card that sits there. Ours is built to get you found on Google and turn visitors into booked calls. Real question — when's the last time your website got you a lead? … (if 'never/rarely') That's exactly what I fix." },
   { k:"They said…",
+    front:"\"I'm on a job right now — call me back.\"",
+    back:"<span class='lead'>Take the yes to talk later — but pin it down.</span> 'No worries, I don't want to catch you on a roof. Real quick though — when's better: tomorrow at 8 before you start, or after 5?' <b>Get a specific time, not 'later.' A booked callback is a win; 'call me back sometime' is a dead lead.</b>" },
+  { k:"They said…",
     front:"\"I'm too busy / I'm booked out.\"",
     back:"<span class='lead'>That's the perfect time to set this up.</span> Work always slows down seasonally — and when it does, you don't want to be scrambling for jobs. We build the system while you're busy so the phone keeps ringing when you're NOT. You do nothing; it runs in the background." },
+  { k:"They said…",
+    front:"\"I'm not good with computers / I'm not tech-savvy.\"",
+    back:"<span class='lead'>Perfect — that's the whole point.</span> 'You don't touch any of it. You send me a few photos and your logo, answer a 10-minute form, and I build and run everything — the site, the Google stuff, the text-backs, all of it. You keep doing the work you're good at; the tech side is 100% on me.' <b>Turn the fear into the value: hands-off IS the product.</b>" },
+  { k:"They said…",
+    front:"\"Do you run Facebook or Google ads for me?\"",
+    back:"<span class='lead'>Not part of what we do — and that's on purpose.</span> 'We don't run paid ads. We get you found the way customers actually trust — showing up on Google with real reviews — plus a system that catches every lead so none slip. Ads stop the second you stop paying; this keeps working.' <b>Don't promise ads. Steer back to get-found + never-lose-a-lead.</b>" },
+  { k:"They said…",
+    front:"\"If I stop paying, do I lose the website?\"",
+    back:"<span class='lead'>Be straight — on the monthly plans, yes.</span> 'On the monthly plans you're renting a system we host, run, and keep working — if you cancel, it comes down. That's why it's month-to-month with no contract: you only keep paying while it's making you money. If you'd rather own it outright with no monthly, we've got the $3,500 buy-it option — it's yours forever.' <b>Never pretend a monthly site is theirs to keep. Offer Ownership if they want to own.</b>" },
   { k:"They said…",
     front:"\"I get all my work from word-of-mouth / referrals.\"",
     back:"<span class='lead'>Referrals are gold — but they max out, and here's the thing:</span> when someone refers you, the first thing that person does is Google your name. If nothing professional shows up, you look smaller than you actually are and you lose them. We make you show up like the real deal and capture those referrals instead of leaking them." },
@@ -303,7 +353,7 @@ const packages = [
   { name:"Essential Website", price:"$500 build + $97/mo",
     tag:"Look professional online",
     why:"The floor, not a downgrade. Right for a guy with no site, or an old one that embarrasses him. He's not chasing more leads yet — he just needs to stop being invisible when someone Googles him.",
-    items:["1–3 pages (Home, Services, Contact)","Mobile-optimized, SEO-ready","One contact form → lead texted/emailed to you","Up to 2 edits/mo"] },
+    items:["1–3 pages (Home, Services, Contact)","Mobile-optimized, SEO-ready","One contact form → lead texted/emailed to you","Up to 2 edits/mo + monthly site check"] },
   { name:"Growth Website", price:"$750 build + $197/mo",
     tag:"Get found + capture more leads",
     why:"Better than Essential because it adds ways IN — his own domain, Google reviews/maps, more than one lead form. He shows up when someone searches his town + trade, not just when they already know his name.",
@@ -311,14 +361,50 @@ const packages = [
   { name:"Business Elite", price:"$1,000 build + $297/mo",
     tag:"Automate follow-up so no lead slips",
     why:"Better than Growth because it stops leads leaking AFTER the phone rings — every missed call gets texted back, every lead sits in a pipeline, nobody falls through the cracks. This is the tier that pays for itself off one saved missed call.",
-    items:["Everything in Growth, plus the GoHighLevel system:","Missed-call text-back automation","Full pipeline (New → Contacted → Booked → Won)","Lead nurture texts + emails","Automatic review requests","UNLIMITED edits"] },
+    items:["Everything in Growth, plus the GoHighLevel system:","Missed-call text-back automation","Full pipeline (New → Contacted → Booked → Won)","Lead nurture texts + emails","Appointment reminders","Automatic review requests","UNLIMITED edits"] },
   { name:"Complete Ownership", price:"$3,500 one-time · no monthly",
     tag:"Pay once, own it outright",
-    why:"Different from the other three, not just bigger — no monthly fee ever. Right for someone who wants to own an asset instead of renting a system, and doesn't need the CRM automation.",
+    why:"Different from the other three, not just bigger — no monthly fee ever, and it's the ONLY tier where he keeps the site if he walks. Right for someone who wants to own an asset instead of renting a system, and doesn't need the CRM automation.",
     items:["Custom site, mobile + SEO ready","You OWN the site and the domain","No CRM automation, no nurture","Quarterly check-in"] },
 ];
 
 const quiz = [
+  { q:"What is the ONE job of the cold call?",
+    scenario:true,
+    opts:[
+      "Close the sale and take payment right there.",
+      "Book a short meeting — you diagnose, pitch, and close in the meeting, not on the call.",
+      "Get through the whole pitch as fast as possible.",
+      "Get his email and hang up." ],
+    a:1,
+    e:"<b>Book the meeting.</b> A contractor can't decide in 60 seconds and you can't diagnose him on the dial. The cold call's only win is a specific, confirmed meeting time. You sell in the meeting." },
+  { q:"He picks up a cold call. What's the strongest way to open?",
+    scenario:true,
+    opts:[
+      "Launch straight into the full pitch, fast.",
+      "Be upfront it's a cold call, ask for 20 seconds, then say who you help and how.",
+      "Pretend you were referred by someone.",
+      "Ask 'how are you doing today?' and wait." ],
+    a:1,
+    e:"<b>Honesty + permission.</b> 'This is a cold call, give me 20 seconds and I'll let you go, fair?' disarms them and earns a small yes. Then one line on who you help. Don't fake a referral, don't dump the pitch." },
+  { q:"On the cold call he asks: \"Just tell me what it costs.\" Best move?",
+    scenario:true,
+    opts:[
+      "Give him one exact price for the top package.",
+      "Give a range, anchor the value, and steer back to booking the 15-minute meeting.",
+      "Refuse to say anything about price.",
+      "Do the full pitch right there on the phone." ],
+    a:1,
+    e:"<b>Range + anchor + steer to the meeting.</b> 'It runs from around $500 to a full lead system depending on what you need — that's exactly why I want 15 minutes.' Don't lock one price on the dial; that's the meeting's job." },
+  { q:"He agrees to hear more. What's the goal before you hang up?",
+    scenario:true,
+    opts:[
+      "A vague 'I'll reach out sometime.'",
+      "A specific, confirmed meeting time + the best number, and a confirmation text sent.",
+      "His credit card number.",
+      "A promise to think about it." ],
+    a:1,
+    e:"<b>Lock a specific, confirmed time.</b> Exact day/time, best number, and text him a confirmation on the spot. A vague 'sometime' is a no. A booked+confirmed meeting is the whole win of the cold call." },
   { q:"A contractor says: \"I already have a website.\" What's your BEST move?",
     scenario:true,
     opts:[
@@ -328,6 +414,50 @@ const quiz = [
       "Immediately drop the price to win him over." ],
     a:1,
     e:"<b>Ask if it's getting him jobs.</b> Having a site ≠ getting leads from it. Most are dead business cards. You reframe from 'do you have one' to 'is it working' — and 'never' is your opening." },
+  { q:"He says: \"Do you run Facebook or Google ads for me?\"",
+    scenario:true,
+    opts:[
+      "\"Yeah, we run all the ads you want.\"",
+      "\"We don't run paid ads — we get you found on Google with reviews and catch every lead so none slip.\"",
+      "\"Ads are extra, I'll quote you later.\"",
+      "Change the subject." ],
+    a:1,
+    e:"<b>No paid ads — steer to get-found + never-lose-a-lead.</b> We don't do Facebook/Google ads. Reviews + local SEO get him found organically; the automation catches leads. Never promise ads you don't run." },
+  { q:"He asks: \"If I cancel, do I keep the website?\"",
+    scenario:true,
+    opts:[
+      "\"Yep, it's yours forever no matter what.\"",
+      "\"On the monthly plans you're renting a system we run — cancel and it comes down. If you want to own it, that's the $3,500 tier.\"",
+      "\"You can never cancel, it's locked in.\"",
+      "Dodge the question." ],
+    a:1,
+    e:"<b>Monthly = renting; cancel and the site comes down.</b> Be straight. Only Complete Ownership ($3,500) means he keeps it. That honesty is WHY it's month-to-month with no contract. Never pretend a monthly site is his to keep." },
+  { q:"He says: \"I'm not good with computers.\" Best response?",
+    scenario:true,
+    opts:[
+      "\"Then this probably isn't for you.\"",
+      "\"Perfect — you don't touch any of it. You send photos and a logo, I build and run everything.\"",
+      "\"You'll figure it out, it's easy.\"",
+      "Explain all the technical details to prove it's simple." ],
+    a:1,
+    e:"<b>Hands-off IS the product.</b> Turn the fear into the value: he does a 10-minute form + a few photos, you handle the site, Google, and automation 100%. He keeps doing the work he's good at." },
+  { q:"He asks: \"How much is it — $500 or $97 a month?\" What's the clean answer?",
+    opts:[
+      "\"Just the $97 a month, that's it.\"",
+      "\"It's a one-time build fee to make the site PLUS a monthly to keep it running — e.g. $500 to build, then $97/mo.\"",
+      "\"Just the $500 one time.\"",
+      "\"Whatever you want it to be.\"" ],
+    a:1,
+    e:"<b>Both numbers, stated clearly.</b> Monthly tiers = one-time build fee + a monthly. Say it plainly so he's never surprised. Only the $3,500 Ownership tier has no monthly." },
+  { q:"He asks: \"Who are you guys / how long have you been around?\" You're brand new. What do you say?",
+    scenario:true,
+    opts:[
+      "Make up years of experience and fake clients.",
+      "Own it: we're a marketing company for contractors, new and growing — you get in early at a better price with the founder's full attention.",
+      "Get defensive.",
+      "\"That doesn't matter.\"" ],
+    a:1,
+    e:"<b>Own the early stage honestly.</b> New = better price + real attention, not a ticket number. The system is proven even if the company is young. Never inflate the company." },
   { q:"What is 'missed-call text-back' and why does it matter?",
     opts:[
       "It calls the customer back on a loop until they answer.",
@@ -339,7 +469,15 @@ const quiz = [
   { q:"Which package includes the full GoHighLevel automation system?",
     opts:[ "Essential ($500)", "Growth ($750)", "Business Elite ($1,000)", "Complete Ownership ($3,500)" ],
     a:2,
-    e:"<b>Business Elite, $1,000 + $297/mo.</b> That tier is defined by GoHighLevel: text-back, pipeline, nurture, and review automation. It's the 'no lead slips' package." },
+    e:"<b>Business Elite, $1,000 + $297/mo.</b> That tier is defined by GoHighLevel: text-back, pipeline, nurture, appointment reminders, and review automation. It's the 'no lead slips' package." },
+  { q:"What does 'appointment reminders' do?",
+    opts:[
+      "Reminds the contractor to pay his bill.",
+      "Auto-texts the customer before a booked job/estimate so they don't no-show.",
+      "Reminds you to call the lead back.",
+      "Schedules the website build." ],
+    a:1,
+    e:"<b>Kills no-shows.</b> Part of GoHighLevel (Business Elite). Once something's booked, it auto-texts the customer a reminder — so he's not driving out to an empty house. Real money saved." },
   { q:"He says: \"It's too expensive.\" Best response?",
     scenario:true,
     opts:[
@@ -354,18 +492,9 @@ const quiz = [
       "We pay Google directly for a top spot.",
       "Review automation (more recent reviews) + local keyword targeting for their area.",
       "We guarantee #1 in 24 hours.",
-      "We buy fake reviews." ],
+      "We run paid ads." ],
     a:1,
-    e:"<b>Reviews + local keywords.</b> Google ranks businesses with more recent reviews higher, so the review system builds them on autopilot; then we target the keywords for their exact service area. Never promise instant #1." },
-  { q:"He says YES. What's the right next move on the call?",
-    scenario:true,
-    opts:[
-      "Hang up fast before he changes his mind.",
-      "Tell him the simple next steps: he fills a quick form + sends photos/logo, then it's live in 7-14 days — and actually send the onboarding form.",
-      "Ask him to build the site himself.",
-      "Immediately try to upsell a bigger package." ],
-    a:1,
-    e:"<b>Make onboarding feel easy and hands-off.</b> Quick form (business info, colors, logo) + a few photos from him, we do the rest, live in 7-14 days. Then send the form and confirm you got his stuff. He does ~10 minutes; you do everything else." },
+    e:"<b>Reviews + local keywords — organic, not ads.</b> Google ranks businesses with more recent reviews higher, so the review system builds them on autopilot; then we target the keywords for their exact area. Never promise instant #1, and remember we don't run paid ads." },
   { q:"He says: \"I get all my work from referrals.\" What do you say?",
     scenario:true,
     opts:[
@@ -384,15 +513,24 @@ const quiz = [
       "Keep pitching without acknowledging it." ],
     a:1,
     e:"<b>Redirect the brush-off into discovery.</b> 'Email me' is usually a soft no. Agree, but earn a few discovery questions first so you learn what he needs — and so the follow-up isn't ignored." },
-  { q:"The hardest one: \"Who have you done this for? What results?\" You have NO case studies. What do you say?",
+  { q:"He says: \"I'm on a job right now, call me back.\" Best move?",
+    scenario:true,
+    opts:[
+      "\"Okay, I'll try you sometime.\"",
+      "Get a SPECIFIC callback time — 'tomorrow at 8 before you start, or after 5?'",
+      "Keep talking anyway.",
+      "Mark him dead." ],
+    a:1,
+    e:"<b>Pin a specific time.</b> Take the yes to talk later but nail it down — a booked callback is a win, 'call me back sometime' is a dead lead. Don't push the pitch on a guy who's on a roof." },
+  { q:"The hardest one: \"Who have you done this for? What results?\" What do you say?",
     scenario:true,
     opts:[
       "Make up a fake client.",
-      "Own it: he'd be an early client here — that's why the price is low — and the SYSTEM is proven everywhere.",
+      "Name Polished by Glizzy & Glam (real launched client), then flip to early-adopter + the proven system.",
       "Get defensive and change the subject.",
       "Admit you have no idea if it works." ],
     a:1,
-    e:"<b>Name Polished by Glizzy &amp; Glam (real launched client), then flip to early-adopter.</b> You DO have a live client — name it. He'd be one of the first contractors, which is the deal (better price, founder attention). Lean on the proven mechanism too. Never fake contractor results." },
+    e:"<b>Name the real client, then flip to early-adopter.</b> You DO have a live client — name Polished by Glizzy & Glam. He'd be one of the first contractors (better price, founder attention). Lean on the proven mechanism too. Never fake contractor results." },
   { q:"What's the core idea of the value ladder ($500 → $3,500)?",
     opts:[
       "Always sell the most expensive one.",
@@ -413,7 +551,7 @@ const quiz = [
   { q:"How long does it take to get a contractor's website fully live?",
     opts:[ "Same day", "7 to 14 days (a lot of it waiting on his photos/content)", "2 to 3 months", "It varies, never commit to a timeframe" ],
     a:1,
-    e:"<b>7 to 14 days.</b> Set that expectation on the call, and tell him the faster he sends photos/logo/content, the faster he's live. Under-promise two weeks, then beat it." },
+    e:"<b>7 to 14 days.</b> Set that expectation, and tell him the faster he sends photos/logo/content, the faster he's live. Under-promise two weeks, then beat it." },
   { q:"He asks: \"Why do I have to pay every month? I just want to buy the site.\" Best answer?",
     scenario:true,
     opts:[
@@ -438,17 +576,8 @@ const quiz = [
       "The monthly fee",
       "The custom domain alone" ],
     a:1,
-    e:"<b>Google Business Profile + reviews + local SEO.</b> That's the 'get found' machinery (Growth tier and up). More recent reviews and the right local keywords are what land him in the map pack instead of nowhere." },
-  { q:"He picks up a cold call. What's the strongest way to open?",
-    scenario:true,
-    opts:[
-      "Launch straight into the full pitch, fast.",
-      "Be upfront it's a cold call, ask for 20 seconds, then say who you help and how.",
-      "Pretend you were referred by someone.",
-      "Ask 'how are you doing today?' and wait." ],
-    a:1,
-    e:"<b>Honesty + permission.</b> 'This is a cold call, give me 20 seconds and I'll let you go, fair?' disarms them and earns a small yes. Then one line on who you help and how. Don't fake a referral, don't dump the pitch." },
-  { q:"During discovery he says: \"I get plenty of calls, but I miss a ton of them when I'm on a job.\" Which package fits?",
+    e:"<b>Google Business Profile + reviews + local SEO.</b> That's the 'get found' machinery (Growth tier and up). More recent reviews and the right local keywords land him in the map pack instead of nowhere." },
+  { q:"In the MEETING, discovery: he says \"I get plenty of calls, but I miss a ton when I'm on a job.\" Which package fits?",
     scenario:true,
     opts:[
       "Essential — he just needs a basic site.",
@@ -457,7 +586,7 @@ const quiz = [
       "Doesn't matter, pitch the cheapest." ],
     a:1,
     e:"<b>Business Elite.</b> His problem is leads leaking AFTER the phone rings — that's the GoHighLevel tier (text-back, pipeline, follow-up). Diagnose from his words, then prescribe the ONE tier that solves it." },
-  { q:"You just asked for the sale: \"Want me to send the form and get started?\" What do you do next?",
+  { q:"In the meeting, you just asked for the sale. What do you do next?",
     scenario:true,
     opts:[
       "Keep talking to fill the silence and re-list features.",
@@ -466,29 +595,35 @@ const quiz = [
       "Say 'no pressure' and back off." ],
     a:1,
     e:"<b>Go quiet.</b> After the close question, silence is your tool. Filling it re-opens the sale or signals you'll discount. Ask, then wait for his answer." },
-  { q:"He says \"not right now.\" Best move?",
+  { q:"He says YES in the meeting. What's the right order to close it out?",
+    scenario:true,
+    opts:[
+      "Send the onboarding form, worry about payment later.",
+      "Payment link FIRST to lock it in, THEN the onboarding form — and confirm he got both.",
+      "Hang up fast before he changes his mind.",
+      "Ask him to build the site himself." ],
+    a:1,
+    e:"<b>Money first, then the form.</b> Send the Stripe payment link to lock the yes, then elitetechmarketing.com/onboarding (10-min form: business info, pages, logo, photos). Confirm he received both before you wrap up." },
+  { q:"He says \"not right now\" / \"I need to think about it.\" Best move?",
     scenario:true,
     opts:[
       "Say 'okay, reach out whenever!' and hang up.",
-      "Lock a concrete next step — a specific callback day/time or a booked follow-up.",
+      "Isolate the real reason (price vs. works), handle it, then lock a specific follow-up time.",
       "Keep pushing until he says yes.",
       "Mark him dead and move on." ],
     a:1,
-    e:"<b>Book a specific next step.</b> 'Call you back Thursday morning or is afternoon better?' A vague 'reach out whenever' is a dead lead. A booked callback keeps it alive without being pushy." },
-  { q:"He says YES. Where do you send him to get started?",
-    scenario:true,
-    opts:[
-      "Tell him you'll email something eventually.",
-      "Text him the onboarding form (elitetechmarketing.com/onboarding) right there and confirm he got it.",
-      "Ask him to search for the website himself.",
-      "Just take his info verbally and hope you remember it." ],
-    a:1,
-    e:"<b>Send elitetechmarketing.com/onboarding on the spot.</b> Text it while you're still on the phone, tell him it's a 10-minute form (business info, pages, logo + photos), and confirm he received it before hanging up. Don't let a yes cool off." },
+    e:"<b>Isolate + book a specific next step.</b> 'Think about it' hides the real objection — is it price or whether it works? Handle that, then lock 'I'll call Thursday at 10.' A vague 'reach out whenever' is a dead lead." },
 ];
 
 /* ============ FLASHCARDS ============ */
 let deck = "concepts", idx = 0, flipped = false;
-function currentDeck(){ return deck === "concepts" ? concepts : deck === "callflow" ? callflow : deck === "products" ? products : objections; }
+function currentDeck(){
+  return deck === "concepts" ? concepts
+    : deck === "coldcall" ? coldcall
+    : deck === "meeting" ? meeting
+    : deck === "products" ? products
+    : objections;
+}
 function renderCard(){
   const c = currentDeck()[idx];
   document.getElementById("cardKicker").textContent = c.k;
