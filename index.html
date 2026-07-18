@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Elite Tech — Cold Caller Trainer</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2a3341;
+    --text:#e6edf3; --dim:#9aa7b4; --accent:#f0883e; --accent2:#e06c2e;
+    --green:#3fb950; --red:#f85149; --blue:#58a6ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg); color:var(--text); display:flex; min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ---- Sidebar ---- */
+  .sidebar{
+    width:230px; background:var(--panel); border-right:1px solid var(--line);
+    padding:22px 16px; flex-shrink:0; display:flex; flex-direction:column; gap:6px;
+  }
+  .brand{font-weight:800; font-size:17px; letter-spacing:.3px; margin-bottom:2px}
+  .brand span{color:var(--accent)}
+  .tag{font-size:11px; color:var(--dim); margin-bottom:20px; text-transform:uppercase; letter-spacing:1px}
+  .nav-btn{
+    text-align:left; background:transparent; border:1px solid transparent; color:var(--dim);
+    padding:12px 14px; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer;
+    display:flex; align-items:center; gap:10px; transition:.15s;
+  }
+  .nav-btn:hover{background:var(--panel2); color:var(--text)}
+  .nav-btn.active{background:var(--panel2); color:var(--text); border-color:var(--accent)}
+  .nav-btn .ico{font-size:17px}
+  .side-foot{margin-top:auto; font-size:11px; color:var(--dim); line-height:1.5; padding-top:20px}
+  /* ---- Main ---- */
+  .main{flex:1; padding:34px 40px; overflow-y:auto; max-height:100vh}
+  .view{display:none; animation:fade .25s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h1{font-size:24px; margin-bottom:6px}
+  .sub{color:var(--dim); font-size:14px; margin-bottom:24px}
+  /* ---- Flashcards ---- */
+  .deck-tabs{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px}
+  .deck-tab{
+    background:var(--panel); border:1px solid var(--line); color:var(--dim);
+    padding:8px 14px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer;
+  }
+  .deck-tab.active{background:var(--accent); color:#1a1206; border-color:var(--accent)}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    min-height:300px; padding:34px; cursor:pointer; position:relative;
+    display:flex; flex-direction:column; justify-content:center;
+    max-width:720px; transition:.15s; user-select:none;
+  }
+  .card:hover{border-color:var(--accent)}
+  .card .side-label{
+    position:absolute; top:16px; right:20px; font-size:11px; text-transform:uppercase;
+    letter-spacing:1px; color:var(--dim);
+  }
+  .card .kicker{font-size:12px; color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px}
+  .card .front{font-size:22px; font-weight:700; line-height:1.4}
+  .card .back{font-size:17px; line-height:1.6; color:var(--text)}
+  .card .back .lead{color:var(--accent); font-weight:700}
+  .card .hint{position:absolute; bottom:16px; left:34px; font-size:12px; color:var(--dim)}
+  .deck-nav{display:flex; align-items:center; gap:14px; margin-top:18px; max-width:720px}
+  .deck-nav button{
+    background:var(--panel2); border:1px solid var(--line); color:var(--text);
+    padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer; font-size:14px;
+  }
+  .deck-nav button:hover{border-color:var(--accent)}
+  .counter{color:var(--dim); font-size:13px; margin-left:auto}
+  /* ---- Quiz ---- */
+  .quiz-box{max-width:720px}
+  .qcard{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:30px}
+  .qkicker{font-size:12px; color:var(--dim); margin-bottom:12px; text-transform:uppercase; letter-spacing:1px}
+  .qtext{font-size:19px; font-weight:600; line-height:1.5; margin-bottom:22px}
+  .opt{
+    display:block; width:100%; text-align:left; background:var(--panel2);
+    border:1px solid var(--line); color:var(--text); padding:15px 18px;
+    border-radius:10px; margin-bottom:11px; font-size:15px; cursor:pointer; transition:.12s; line-height:1.4;
+  }
+  .opt:hover{border-color:var(--accent)}
+  .opt.correct{background:rgba(63,185,80,.15); border-color:var(--green)}
+  .opt.wrong{background:rgba(248,81,73,.13); border-color:var(--red)}
+  .opt:disabled{cursor:default}
+  .explain{
+    margin-top:8px; padding:16px 18px; border-radius:10px; background:var(--panel2);
+    border-left:3px solid var(--accent); font-size:14px; line-height:1.6; display:none;
+  }
+  .explain.show{display:block}
+  .explain b{color:var(--accent)}
+  .quiz-foot{display:flex; align-items:center; margin-top:20px; gap:14px}
+  .quiz-foot button{
+    background:var(--accent); border:none; color:#1a1206; padding:12px 24px;
+    border-radius:10px; font-weight:700; cursor:pointer; font-size:15px;
+  }
+  .quiz-foot button:disabled{opacity:.4; cursor:default}
+  .progress{color:var(--dim); font-size:13px}
+  .bar{height:6px; background:var(--panel); border-radius:4px; overflow:hidden; margin-bottom:24px; max-width:720px}
+  .bar-fill{height:100%; background:var(--accent); width:0; transition:.3s}
+  .result{text-align:center; padding:50px 20px; max-width:720px}
+  .result .score{font-size:52px; font-weight:800; color:var(--accent)}
+  .result .msg{font-size:18px; margin:12px 0 26px; color:var(--dim)}
+  .result button{background:var(--accent); border:none; color:#1a1206; padding:13px 30px; border-radius:10px; font-weight:700; cursor:pointer; font-size:15px}
+  /* ---- Packages ref ---- */
+  .pkg{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:16px; max-width:720px}
+  .pkg h3{font-size:18px; margin-bottom:4px}
+  .pkg .price{color:var(--accent); font-weight:700; font-size:15px; margin-bottom:12px}
+  .pkg ul{list-style:none; display:flex; flex-direction:column; gap:7px}
+  .pkg li{font-size:14px; color:var(--dim); padding-left:20px; position:relative; line-height:1.4}
+  .pkg li:before{content:"→"; position:absolute; left:0; color:var(--accent)}
+  .pkg-tag{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--accent); margin-bottom:12px}
+  .pkg-why{margin-top:14px; padding:12px 14px; border-radius:8px; background:rgba(240,136,62,.08); border-left:3px solid var(--accent); font-size:13px; line-height:1.5; color:var(--text)}
+  .pkg-why b{color:var(--accent)}
+  .todo{background:rgba(240,136,62,.1); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; font-size:13px; color:var(--accent); max-width:720px; margin-bottom:18px}
+  /* ---- Mobile ---- */
+  @media(max-width:760px){
+    body{flex-direction:column}
+    .sidebar{width:100%; flex-direction:row; overflow-x:auto; padding:12px; gap:8px; align-items:center; border-right:none; border-bottom:1px solid var(--line)}
+    .brand,.tag,.side-foot{display:none}
+    .nav-btn{white-space:nowrap; padding:10px 14px}
+    .main{padding:22px 18px; max-height:none}
+    .card{padding:26px; min-height:260px}
+  }
+</style>
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="brand">Elite<span>Tech</span></div>
+    <div class="tag">Cold Caller Trainer</div>
+    <button class="nav-btn active" data-view="cards"><span class="ico">🃏</span> Flashcards</button>
+    <button class="nav-btn" data-view="quiz"><span class="ico">✅</span> Quiz</button>
+    <button class="nav-btn" data-view="packages"><span class="ico">📦</span> Packages</button>
+    <div class="side-foot">Study these until the pivots are automatic. The goal isn't reading a script — it's <b style="color:var(--text)">knowing why it works.</b></div>
+  </nav>
+
+  <main class="main">
+    <!-- ============ FLASHCARDS ============ -->
+    <section class="view active" id="cards">
+      <h1>Flashcards</h1>
+      <p class="sub">Tap a card to flip. Learn the concept, then the rebuttal.</p>
+      <div class="deck-tabs">
+        <button class="deck-tab active" data-deck="concepts">Core Concepts</button>
+        <button class="deck-tab" data-deck="callflow">The Call</button>
+        <button class="deck-tab" data-deck="products">What We Sell</button>
+        <button class="deck-tab" data-deck="objections">Objection Pivots</button>
+      </div>
+      <div class="card" id="flashcard" onclick="flip()">
+        <div class="side-label" id="sideLabel">Front · tap to flip</div>
+        <div class="kicker" id="cardKicker"></div>
+        <div id="cardBody"></div>
+        <div class="hint">Tap anywhere to flip</div>
+      </div>
+      <div class="deck-nav">
+        <button onclick="prevCard()">← Prev</button>
+        <button onclick="nextCard()">Next →</button>
+        <span class="counter" id="cardCounter"></span>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section class="view" id="quiz">
+      <h1>Quiz</h1>
+      <p class="sub">Knowledge + "what do you say when they said X." No skipping.</p>
+      <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+      <div class="quiz-box" id="quizBox"></div>
+    </section>
+
+    <!-- ============ PACKAGES ============ -->
+    <section class="view" id="packages">
+      <h1>The 4 Packages</h1>
+      <p class="sub">Know these cold. Every price ties to an outcome.</p>
+      <div class="pkg" style="border-color:var(--accent)">
+        <h3>Quick facts — come up on every call</h3>
+        <ul>
+          <li><b style="color:var(--text)">Delivery speed:</b> 7 to 14 days to a fully published, live website. A big chunk of that is just waiting on him to send photos, logo, and content — the faster he gets those to us, the faster he's live.</li>
+          <li><b style="color:var(--text)">Contract:</b> No contract, ever. Month-to-month, cancel anytime.</li>
+          <li><b style="color:var(--text)">Client count:</b> Early stage — Polished by Glizzy &amp; Glam is the first real client. Own that honestly (see the "who have you done this for" objection card) — don't inflate it.</li>
+        </ul>
+      </div>
+      <p class="sub" style="margin-top:22px">Each tier answers a different question: does he look professional, does he get found, does every lead get chased, or does he want to own it outright. Diagnose which one he's missing before you pitch.</p>
+      <div id="pkgList"></div>
+    </section>
+  </main>
+
+<script>
+/* ============ DATA ============ */
+const concepts = [
+  { k:"Core Concept",
+    front:"Why does a contractor even need a website?",
+    back:"<span class='lead'>It's a 24/7 salesman.</span> When someone needs a roofer at 9pm, they Google it. If you don't show up looking professional, you don't exist to that customer — the job goes to the guy who does. A site isn't decoration, it's how you get found and how you win trust before you ever pick up the phone." },
+  { k:"Core Concept",
+    front:"Speed-to-lead & missed-call text-back — what is it and why does it matter?",
+    back:"<span class='lead'>Most contractors miss half their calls</span> — they're on a roof, driving, under a sink. A missed call is a lost job, because the customer just calls the next guy. Our system <b>auto-texts anyone whose call you miss</b> ('Hey, saw I missed you — what do you need?'). You catch the lead instead of losing it. This is the single biggest money-leak we plug." },
+  { k:"Core Concept",
+    front:"What does the GoHighLevel system actually DO?",
+    back:"<span class='lead'>It's the follow-up engine so no lead slips.</span> One dashboard that: texts back missed calls, tracks every lead through a pipeline (New → Contacted → Booked → Won), sends automatic follow-up texts/emails, and <b>asks happy customers for a Google review automatically.</b> Ads and websites get the phone to ring — this makes sure nothing falls through the cracks after it does." },
+  { k:"Core Concept",
+    front:"How do we actually get a contractor found / ranked on Google?",
+    back:"<span class='lead'>Reviews + local keywords.</span> Google ranks businesses with more recent reviews higher — so our review-automation system pumps up their review count on autopilot. On top of that we target the <b>keywords for their exact service area</b> ('roofer in [town]') so the right local customers find them. More reviews + local SEO = you climb the map." },
+  { k:"Core Concept",
+    front:"The value ladder — why are there 4 different packages?",
+    back:"<span class='lead'>Each price buys a different outcome.</span> $500 = look professional online. $750 = get found + capture leads (domain, Google, forms). $1,000 = automate all the follow-up so no lead slips (the GoHighLevel system). $3,500 = pay once and own it forever. You match the package to what the contractor's actually missing — don't pitch all four, diagnose then prescribe." },
+  { k:"Core Concept",
+    front:"The ROI math — how do you make the price feel small?",
+    back:"<span class='lead'>One job pays for a year.</span> A roof or HVAC job is $5,000–$15,000. The whole system is under $300/mo. If it gets them <b>ONE extra job all year</b>, it's already paid for itself many times over. Reframe it: it's not a cost, it's a salesman working 24/7 for less than minimum wage. Always do this math out loud on the call." },
+  { k:"Core Concept",
+    front:"How does the BUNDLING work? (each package vs the next)",
+    back:"<span class='lead'>The tiers stack — each one is everything below it PLUS one big new thing.</span> Essential = the website. Growth = that website + get-found tools (domain, Google, more forms). Business Elite = all of that + the full GoHighLevel automation. Ownership is the odd one out — it's a one-time buy-it-outright, no monthly. So you never re-explain the whole thing: 'it's everything in the last one, plus ___.'" },
+  { k:"Core Concept",
+    front:"How long until a contractor's website is actually live?",
+    back:"<span class='lead'>7 to 14 days to fully published.</span> Not months. The main thing that slows it down is the client — we need his photos, logo, and content. Set that expectation on the call: 'The faster you get me your pictures and details, the faster you're live — usually a week to two.' Under-promise, then beat it." },
+  { k:"Core Concept",
+    front:"Why is there a MONTHLY fee — what's he paying for every month?",
+    back:"<span class='lead'>The monthly keeps the machine running, not just the site up.</span> Hosting, security, and edits, PLUS the automation actually working month after month — the text-backs firing, the review requests going out, the pipeline running, leads getting captured. A website you build once and abandon dies. The monthly is what makes it a system that keeps working, not a brochure that gathers dust." },
+  { k:"Core Concept",
+    front:"He said YES — now what? (the onboarding, so you don't freeze)",
+    back:"<span class='lead'>Make it feel easy and hands-off. Say this:</span> 'Awesome — here's exactly what happens next. I'll send you a quick form: your business info, the pages you want, your colors and logo. You send me that plus a few photos of your work, and I take it from there. Within 7 to 14 days your site's live — you just review it and I make any tweaks.' <b>Then actually send the onboarding form and confirm you got his photos/logo.</b> The whole promise is: he does 10 minutes of stuff, we do everything else." },
+];
+
+const callflow = [
+  { k:"The Call · Step 1",
+    front:"The Opener — how to start so he doesn't hang up",
+    back:"<span class='lead'>Be upfront, ask permission, buy 20 seconds.</span> 'Hey [name], this is [your name] with Elite Tech — I'll be honest, this is a cold call. Give me 20 seconds and if it's not for you, I'll let you go. Fair enough?' … (yes) 'I help contractors around [town] show up on Google and stop losing jobs to missed calls.' <b>Honesty disarms them. The permission question gets a small yes that keeps them on.</b>" },
+  { k:"The Call · Step 2",
+    front:"Discovery — the 3 questions that tell you which package to pitch",
+    back:"<span class='lead'>Diagnose before you prescribe. Ask:</span> 1) 'Do you have a website right now — and is it actually bringing you jobs?' 2) 'When a call comes in and you can't grab it, what happens to that lead?' 3) 'Are you trying to get more jobs, or mostly just look more professional?' <b>No site → Essential. Not getting found → Growth. Losing leads / missed calls → Business Elite.</b> Let his answers pick the tier." },
+  { k:"The Call · Step 3",
+    front:"The Transition — from listening to pitching",
+    back:"<span class='lead'>Feed his own words back, then prescribe ONE tier.</span> 'Okay, so you've got the work but you're missing calls when you're on a job — that's exactly the leak I fix. Here's what I'd put you in and why…' Then pitch <b>only the package that matches</b>, not all four. Tie every feature to the problem he just told you about." },
+  { k:"The Call · Step 4",
+    front:"The Close — ask for it and then be quiet",
+    back:"<span class='lead'>Assume the sale, name the price, offer to start now.</span> 'So the site plus the missed-call text-back is [price]. I've actually got time to get you started this week — want me to send the quick onboarding form and get the ball rolling?' <b>Then STOP talking.</b> Whoever speaks first after the ask loses. Let the silence sit — don't fill it by re-pitching or discounting." },
+  { k:"The Call · Step 5",
+    front:"If it's a \"not right now\" — lock the next step, don't chase",
+    back:"<span class='lead'>Never leave it vague. Get a concrete next step.</span> 'No problem. When's better for you — I'll call you back Thursday morning, or would afternoon work?' Or: 'I'll text you the info right now — can you take 2 minutes to look tonight and I'll follow up tomorrow at 10?' <b>A booked callback beats a 'maybe later' every time.</b> Vague = dead." },
+  { k:"The Call · Step 6",
+    front:"He said YES — do THIS exactly (don't fumble the handoff)",
+    back:"<span class='lead'>Two things, in order, while you're still on the phone:</span> <b>1) Payment</b> — text him the Stripe link to lock it in: 'I'll text you the secure payment link right now — once that's in, we get started.' <b>2) Onboarding form</b> — then send <b>elitetechmarketing.com/onboarding</b>: 'This quick form gets me your business info, pages, logo and photos — about 10 minutes.' <b>Confirm he got both texts before you hang up.</b> Money first, then the form.<br><br><span style='color:#f0883e'>⚠️ Brandon: paste the real Stripe link(s) here</span> — one per package or a single deposit link. Right now the URL is a blank; tell Claude and it drops in." },
+];
+
+const products = [
+  { k:"What We Sell",
+    front:"The Website",
+    back:"<span class='lead'>The foundation — a fast, mobile-first, professional site.</span> Every package includes one. What makes it different from a cheap DIY site: it's built to convert (clear calls-to-action, lead forms) and it's SEO-ready so Google can actually find it. This is what makes him look legit the second someone checks him out." },
+  { k:"What We Sell",
+    front:"Custom Domain (his own .com)",
+    back:"<span class='lead'>His name, not ours.</span> Starts at the Growth tier. yourbusiness.com instead of a generic default — it looks owned and permanent, and it's what customers trust and remember. Small thing, big credibility difference." },
+  { k:"What We Sell",
+    front:"Google Business Profile + Reviews + Map",
+    back:"<span class='lead'>This is how he shows up in the local 'map pack' when people search.</span> Growth tier and up. We set up/optimize his Google profile, wire in reviews, and embed the map. When someone searches 'roofer near me,' this is what decides whether he's one of the three that show up — or invisible." },
+  { k:"What We Sell",
+    front:"Missed-Call Text-Back",
+    back:"<span class='lead'>The single most valuable piece.</span> Part of the GoHighLevel system (Business Elite). Miss a call? The customer instantly gets a text so they don't just dial the next guy. This alone can pay for the whole package off one saved job." },
+  { k:"What We Sell",
+    front:"GoHighLevel CRM + Pipeline",
+    back:"<span class='lead'>The command center — every lead in one place.</span> Business Elite. Instead of leads living in a messy inbox and getting forgotten, they move through stages: New → Contacted → Booked → Won. He can see exactly who needs a follow-up, so nobody gets dropped." },
+  { k:"What We Sell",
+    front:"Review Automation",
+    back:"<span class='lead'>Turns happy jobs into Google reviews on autopilot.</span> Part of GoHighLevel. After a job, it automatically asks the customer for a review. More recent reviews = higher Google ranking = more calls. It's the engine behind our 'we'll help you rank higher' promise." },
+  { k:"What We Sell",
+    front:"Lead Nurture (auto texts + emails)",
+    back:"<span class='lead'>Follows up so he doesn't have to.</span> Business Elite. A new lead that doesn't book right away gets automatic, friendly follow-up texts and emails over the next few days. Most sales come from follow-up nobody does — this does it automatically." },
+  { k:"What We Sell",
+    front:"Local SEO / Keyword Targeting",
+    back:"<span class='lead'>Makes sure the RIGHT people find him.</span> We tune the site around the keywords for his exact trade + service area ('roofer in [town]'), so he shows up for the searches that actually turn into jobs — not random traffic from three states away." },
+];
+
+const objections = [
+  { k:"They said…",
+    front:"\"I already have a website.\"",
+    back:"<span class='lead'>Great — is it actually bringing you jobs?</span> Most contractor sites are just a digital business card that sits there. Ours is built to get you found on Google and turn visitors into booked calls. Real question — when's the last time your website got you a lead? … (if 'never/rarely') That's exactly what I fix." },
+  { k:"They said…",
+    front:"\"I'm too busy / I'm booked out.\"",
+    back:"<span class='lead'>That's the perfect time to set this up.</span> Work always slows down seasonally — and when it does, you don't want to be scrambling for jobs. We build the system while you're busy so the phone keeps ringing when you're NOT. You do nothing; it runs in the background." },
+  { k:"They said…",
+    front:"\"I get all my work from word-of-mouth / referrals.\"",
+    back:"<span class='lead'>Referrals are gold — but they max out, and here's the thing:</span> when someone refers you, the first thing that person does is Google your name. If nothing professional shows up, you look smaller than you actually are and you lose them. We make you show up like the real deal and capture those referrals instead of leaking them." },
+  { k:"They said…",
+    front:"\"It's too expensive / I can't afford it.\"",
+    back:"<span class='lead'>Let's do the quick math.</span> One roof or HVAC job is what — five to fifteen grand? This is under three hundred a month. If it lands you ONE extra job a year it's paid for itself ten times over. It's not a cost — it's a salesman working 24/7 for less than you'd pay minimum wage. What's one job worth to you?" },
+  { k:"They said…",
+    front:"\"Just send me some info / email me.\"",
+    back:"<span class='lead'>Happy to — but an email won't tell you much.</span> Give me literally 90 seconds first: what's your business, what area do you cover, and are you trying to get more calls or just look more professional? Then I'll know exactly what would actually help you, and the info I send is worth reading. Fair? (Redirect the brush-off into discovery — don't just agree to email.)" },
+  { k:"They said…",
+    front:"\"I tried marketing before and it didn't work.\"",
+    back:"<span class='lead'>What'd you try? … Yeah, that's the problem with most of it.</span> They take your money, run some ads, and never follow up on the leads. We're different — it's not just getting the phone to ring, it's making sure <b>no lead ever slips.</b> Miss a call? It texts them back automatically. That follow-up piece is the part everybody else skips, and it's why it didn't work before." },
+  { k:"They said…",
+    front:"\"I need to think about it / talk to my partner.\"",
+    back:"<span class='lead'>Totally fair — it's a real decision.</span> Quick question so I can help you talk it through: is the thing you'd run by them the <b>price</b>, or whether it'll <b>actually work</b>? … (handle the REAL objection now). Let's lock a quick time for after you two talk, so it's fresh instead of getting buried." },
+  { k:"They said…",
+    front:"\"Why do I have to pay every MONTH? I just want to buy the site.\"",
+    back:"<span class='lead'>Fair question — the monthly isn't for the site sitting there, it's for the machine running.</span> Hosting, security, edits whenever you need them, and the automation actually working every month — the text-backs, the review requests, the follow-ups. A one-and-done website dies. But if you truly just want to own it outright with no monthly, we have a package for that ($3,500, you own it). Most guys want the system running though — that's where the leads come from." },
+  { k:"They said… (THE HARD ONE)",
+    front:"\"Who have you done this for? What are your results?\"",
+    back:"<span class='lead'>We just built and launched a full site for a local business — Polished by Glizzy &amp; Glam — and you'd be one of our first contractors, which is actually the advantage.</span> That's exactly why the price is what it is. The <b>system</b> isn't new — missed-call text-back, review automation, Google ranking — that's proven stuff working for contractors everywhere. You get in before we raise the price and before your competitor down the street does. I'd rather have a few clients I make look amazing than a hundred I ignore. (Name the real client — Polished by Glizzy &amp; Glam — then flip to early-adopter pricing + proven mechanism. Don't claim contractor results you don't have.)" },
+];
+
+const packages = [
+  { name:"Essential Website", price:"$500 build + $97/mo",
+    tag:"Look professional online",
+    why:"The floor, not a downgrade. Right for a guy with no site, or an old one that embarrasses him. He's not chasing more leads yet — he just needs to stop being invisible when someone Googles him.",
+    items:["1–3 pages (Home, Services, Contact)","Mobile-optimized, SEO-ready","One contact form → lead texted/emailed to you","Up to 2 edits/mo"] },
+  { name:"Growth Website", price:"$750 build + $197/mo",
+    tag:"Get found + capture more leads",
+    why:"Better than Essential because it adds ways IN — his own domain, Google reviews/maps, more than one lead form. He shows up when someone searches his town + trade, not just when they already know his name.",
+    items:["Everything in Essential, plus:","4–5 pages, multiple lead-capture forms","Custom domain (your own .com)","Google Business Profile + reviews + map","Basic lead tracking","Up to 7 edits/mo"] },
+  { name:"Business Elite", price:"$1,000 build + $297/mo",
+    tag:"Automate follow-up so no lead slips",
+    why:"Better than Growth because it stops leads leaking AFTER the phone rings — every missed call gets texted back, every lead sits in a pipeline, nobody falls through the cracks. This is the tier that pays for itself off one saved missed call.",
+    items:["Everything in Growth, plus the GoHighLevel system:","Missed-call text-back automation","Full pipeline (New → Contacted → Booked → Won)","Lead nurture texts + emails","Automatic review requests","UNLIMITED edits"] },
+  { name:"Complete Ownership", price:"$3,500 one-time · no monthly",
+    tag:"Pay once, own it outright",
+    why:"Different from the other three, not just bigger — no monthly fee ever. Right for someone who wants to own an asset instead of renting a system, and doesn't need the CRM automation.",
+    items:["Custom site, mobile + SEO ready","You OWN the site and the domain","No CRM automation, no nurture","Quarterly check-in"] },
+];
+
+const quiz = [
+  { q:"A contractor says: \"I already have a website.\" What's your BEST move?",
+    scenario:true,
+    opts:[
+      "Apologize and hang up — he's covered.",
+      "Ask if it's actually bringing him jobs / when it last got him a lead.",
+      "Tell him his website is bad.",
+      "Immediately drop the price to win him over." ],
+    a:1,
+    e:"<b>Ask if it's getting him jobs.</b> Having a site ≠ getting leads from it. Most are dead business cards. You reframe from 'do you have one' to 'is it working' — and 'never' is your opening." },
+  { q:"What is 'missed-call text-back' and why does it matter?",
+    opts:[
+      "It calls the customer back on a loop until they answer.",
+      "It auto-texts anyone whose call the contractor missed, so the lead isn't lost.",
+      "It blocks spam calls.",
+      "It records calls for training." ],
+    a:1,
+    e:"<b>Auto-texts missed callers.</b> Contractors miss ~half their calls (on a roof, driving). A missed call = a lost job to the next guy. Text-back catches it. This is the biggest money-leak we plug." },
+  { q:"Which package includes the full GoHighLevel automation system?",
+    opts:[ "Essential ($500)", "Growth ($750)", "Business Elite ($1,000)", "Complete Ownership ($3,500)" ],
+    a:2,
+    e:"<b>Business Elite, $1,000 + $297/mo.</b> That tier is defined by GoHighLevel: text-back, pipeline, nurture, and review automation. It's the 'no lead slips' package." },
+  { q:"He says: \"It's too expensive.\" Best response?",
+    scenario:true,
+    opts:[
+      "\"Okay, maybe another time.\"",
+      "Do the math: one job is $5–15k, this is under $300/mo — one extra job pays for a year.",
+      "Cut the price in half on the spot.",
+      "List every feature again, faster." ],
+    a:1,
+    e:"<b>Do the ROI math out loud.</b> Anchor the price against one job's value. It's a salesman working 24/7 for less than minimum wage. Never discount first — reframe the value." },
+  { q:"How do we actually help a contractor rank higher on Google?",
+    opts:[
+      "We pay Google directly for a top spot.",
+      "Review automation (more recent reviews) + local keyword targeting for their area.",
+      "We guarantee #1 in 24 hours.",
+      "We buy fake reviews." ],
+    a:1,
+    e:"<b>Reviews + local keywords.</b> Google ranks businesses with more recent reviews higher, so the review system builds them on autopilot; then we target the keywords for their exact service area. Never promise instant #1." },
+  { q:"He says YES. What's the right next move on the call?",
+    scenario:true,
+    opts:[
+      "Hang up fast before he changes his mind.",
+      "Tell him the simple next steps: he fills a quick form + sends photos/logo, then it's live in 7-14 days — and actually send the onboarding form.",
+      "Ask him to build the site himself.",
+      "Immediately try to upsell a bigger package." ],
+    a:1,
+    e:"<b>Make onboarding feel easy and hands-off.</b> Quick form (business info, colors, logo) + a few photos from him, we do the rest, live in 7-14 days. Then send the form and confirm you got his stuff. He does ~10 minutes; you do everything else." },
+  { q:"He says: \"I get all my work from referrals.\" What do you say?",
+    scenario:true,
+    opts:[
+      "\"Then you don't need us.\"",
+      "Referrals max out — and referred people Google you first; if nothing shows up you lose them.",
+      "\"Referrals are unreliable, drop them.\"",
+      "Change the subject to price." ],
+    a:1,
+    e:"<b>Referrals max out + they Google you.</b> You validate referrals, then show the leak: a referred customer checks you online first. No professional presence = you look small and lose them. We capture those." },
+  { q:"He says: \"Just email me some info.\" Best move?",
+    scenario:true,
+    opts:[
+      "Say okay and send a long email, then hope.",
+      "Agree — but first get 90 seconds: his business, area, and goal, so the info is actually relevant.",
+      "Refuse to send anything.",
+      "Keep pitching without acknowledging it." ],
+    a:1,
+    e:"<b>Redirect the brush-off into discovery.</b> 'Email me' is usually a soft no. Agree, but earn a few discovery questions first so you learn what he needs — and so the follow-up isn't ignored." },
+  { q:"The hardest one: \"Who have you done this for? What results?\" You have NO case studies. What do you say?",
+    scenario:true,
+    opts:[
+      "Make up a fake client.",
+      "Own it: he'd be an early client here — that's why the price is low — and the SYSTEM is proven everywhere.",
+      "Get defensive and change the subject.",
+      "Admit you have no idea if it works." ],
+    a:1,
+    e:"<b>Name Polished by Glizzy &amp; Glam (real launched client), then flip to early-adopter.</b> You DO have a live client — name it. He'd be one of the first contractors, which is the deal (better price, founder attention). Lean on the proven mechanism too. Never fake contractor results." },
+  { q:"What's the core idea of the value ladder ($500 → $3,500)?",
+    opts:[
+      "Always sell the most expensive one.",
+      "Each price buys a different outcome — diagnose what he's missing, then prescribe the fit.",
+      "The cheap one is a trap to upsell later.",
+      "They're all the same, just different names." ],
+    a:1,
+    e:"<b>Diagnose, then prescribe.</b> $500 = look pro, $750 = get found, $1,000 = automate follow-up, $3,500 = own it. Match the package to the gap. Don't fire all four at him." },
+  { q:"He says: \"I tried marketing before and it didn't work.\" Best pivot?",
+    scenario:true,
+    opts:[
+      "\"Well ours is just better, trust me.\"",
+      "Ask what he tried, then show the difference: most skip follow-up — we make sure no lead slips.",
+      "Agree that marketing never works.",
+      "Immediately offer a refund guarantee." ],
+    a:1,
+    e:"<b>Ask, then differentiate on follow-up.</b> Most marketing gets the phone to ring and stops. Our edge is the follow-up engine (text-back, nurture, reviews) — the exact part that made his last attempt fail." },
+  { q:"How long does it take to get a contractor's website fully live?",
+    opts:[ "Same day", "7 to 14 days (a lot of it waiting on his photos/content)", "2 to 3 months", "It varies, never commit to a timeframe" ],
+    a:1,
+    e:"<b>7 to 14 days.</b> Set that expectation on the call, and tell him the faster he sends photos/logo/content, the faster he's live. Under-promise two weeks, then beat it." },
+  { q:"He asks: \"Why do I have to pay every month? I just want to buy the site.\" Best answer?",
+    scenario:true,
+    opts:[
+      "\"You don't, it's a one-time fee.\" (wrong — most tiers are monthly)",
+      "The monthly runs the machine — hosting, edits, and the automation firing every month; but there IS a buy-it-outright option ($3,500).",
+      "\"That's just how it works, sorry.\"",
+      "Waive the monthly to close him." ],
+    a:1,
+    e:"<b>The monthly = the machine running, not the site sitting there.</b> Hosting, edits, and the text-backs/reviews/follow-ups working every month. Offer the $3,500 own-it option if he truly wants no monthly — but the leads come from the system running." },
+  { q:"How should you explain the difference between the packages (the bundling)?",
+    opts:[
+      "They're totally separate products with nothing in common.",
+      "Each tier is everything in the one below it PLUS one big new thing.",
+      "The expensive ones just cost more for the same stuff.",
+      "Only sell the top one and ignore the rest." ],
+    a:1,
+    e:"<b>They stack.</b> Essential = the site. Growth = that + get-found tools. Business Elite = that + full automation. Ownership = one-time buy-it-outright. Explain each as 'everything in the last one, plus ___.'" },
+  { q:"A customer searches 'roofer near me.' Which piece decides if the contractor shows up in the map results?",
+    opts:[
+      "The contact form",
+      "The Google Business Profile + reviews (plus local keywords)",
+      "The monthly fee",
+      "The custom domain alone" ],
+    a:1,
+    e:"<b>Google Business Profile + reviews + local SEO.</b> That's the 'get found' machinery (Growth tier and up). More recent reviews and the right local keywords are what land him in the map pack instead of nowhere." },
+  { q:"He picks up a cold call. What's the strongest way to open?",
+    scenario:true,
+    opts:[
+      "Launch straight into the full pitch, fast.",
+      "Be upfront it's a cold call, ask for 20 seconds, then say who you help and how.",
+      "Pretend you were referred by someone.",
+      "Ask 'how are you doing today?' and wait." ],
+    a:1,
+    e:"<b>Honesty + permission.</b> 'This is a cold call, give me 20 seconds and I'll let you go, fair?' disarms them and earns a small yes. Then one line on who you help and how. Don't fake a referral, don't dump the pitch." },
+  { q:"During discovery he says: \"I get plenty of calls, but I miss a ton of them when I'm on a job.\" Which package fits?",
+    scenario:true,
+    opts:[
+      "Essential — he just needs a basic site.",
+      "Business Elite — the missed-call text-back + automation is exactly his leak.",
+      "Complete Ownership — buy it outright.",
+      "Doesn't matter, pitch the cheapest." ],
+    a:1,
+    e:"<b>Business Elite.</b> His problem is leads leaking AFTER the phone rings — that's the GoHighLevel tier (text-back, pipeline, follow-up). Diagnose from his words, then prescribe the ONE tier that solves it." },
+  { q:"You just asked for the sale: \"Want me to send the form and get started?\" What do you do next?",
+    scenario:true,
+    opts:[
+      "Keep talking to fill the silence and re-list features.",
+      "Stop talking and let him answer — whoever speaks first after the ask loses.",
+      "Immediately offer a discount.",
+      "Say 'no pressure' and back off." ],
+    a:1,
+    e:"<b>Go quiet.</b> After the close question, silence is your tool. Filling it re-opens the sale or signals you'll discount. Ask, then wait for his answer." },
+  { q:"He says \"not right now.\" Best move?",
+    scenario:true,
+    opts:[
+      "Say 'okay, reach out whenever!' and hang up.",
+      "Lock a concrete next step — a specific callback day/time or a booked follow-up.",
+      "Keep pushing until he says yes.",
+      "Mark him dead and move on." ],
+    a:1,
+    e:"<b>Book a specific next step.</b> 'Call you back Thursday morning or is afternoon better?' A vague 'reach out whenever' is a dead lead. A booked callback keeps it alive without being pushy." },
+  { q:"He says YES. Where do you send him to get started?",
+    scenario:true,
+    opts:[
+      "Tell him you'll email something eventually.",
+      "Text him the onboarding form (elitetechmarketing.com/onboarding) right there and confirm he got it.",
+      "Ask him to search for the website himself.",
+      "Just take his info verbally and hope you remember it." ],
+    a:1,
+    e:"<b>Send elitetechmarketing.com/onboarding on the spot.</b> Text it while you're still on the phone, tell him it's a 10-minute form (business info, pages, logo + photos), and confirm he received it before hanging up. Don't let a yes cool off." },
+];
+
+/* ============ FLASHCARDS ============ */
+let deck = "concepts", idx = 0, flipped = false;
+function currentDeck(){ return deck === "concepts" ? concepts : deck === "callflow" ? callflow : deck === "products" ? products : objections; }
+function renderCard(){
+  const c = currentDeck()[idx];
+  document.getElementById("cardKicker").textContent = c.k;
+  const body = document.getElementById("cardBody");
+  const label = document.getElementById("sideLabel");
+  if(!flipped){
+    body.className=""; body.innerHTML = "<div class='front'>"+c.front+"</div>";
+    label.textContent = "Front · tap to flip";
+  } else {
+    body.innerHTML = "<div class='back'>"+c.back+"</div>";
+    label.textContent = "Answer";
+  }
+  document.getElementById("cardCounter").textContent = (idx+1)+" / "+currentDeck().length;
+}
+function flip(){ flipped = !flipped; renderCard(); }
+function nextCard(){ idx = (idx+1) % currentDeck().length; flipped=false; renderCard(); }
+function prevCard(){ idx = (idx-1+currentDeck().length) % currentDeck().length; flipped=false; renderCard(); }
+document.querySelectorAll(".deck-tab").forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll(".deck-tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");
+    deck = t.dataset.deck; idx=0; flipped=false; renderCard();
+  };
+});
+
+/* ============ QUIZ ============ */
+let qi = 0, score = 0, answered = false;
+function renderQuiz(){
+  const box = document.getElementById("quizBox");
+  document.getElementById("barFill").style.width = (qi/quiz.length*100)+"%";
+  if(qi >= quiz.length){
+    const pct = Math.round(score/quiz.length*100);
+    let msg = pct>=90 ? "He's ready to dial." : pct>=70 ? "Close — drill the misses." : "Back to the flashcards first.";
+    box.innerHTML = "<div class='result'><div class='score'>"+score+" / "+quiz.length+"</div><div class='msg'>"+pct+"% — "+msg+"</div><button onclick='restartQuiz()'>Try Again</button></div>";
+    document.getElementById("barFill").style.width = "100%";
+    return;
+  }
+  const item = quiz[qi];
+  answered = false;
+  let html = "<div class='qcard'><div class='qkicker'>"+(item.scenario?"Scenario · Q":"Knowledge · Q")+(qi+1)+" of "+quiz.length+"</div>";
+  html += "<div class='qtext'>"+item.q+"</div>";
+  item.opts.forEach((o,i)=>{ html += "<button class='opt' data-i='"+i+"' onclick='pick("+i+")'>"+o+"</button>"; });
+  html += "<div class='explain' id='explain'></div>";
+  html += "<div class='quiz-foot'><button id='nextBtn' onclick='nextQ()' disabled>Next →</button><span class='progress'>Score: "+score+"</span></div></div>";
+  box.innerHTML = html;
+}
+function pick(i){
+  if(answered) return;
+  answered = true;
+  const item = quiz[qi];
+  const opts = document.querySelectorAll(".opt");
+  opts.forEach(o=>o.disabled=true);
+  opts[item.a].classList.add("correct");
+  if(i === item.a){ score++; }
+  else { opts[i].classList.add("wrong"); }
+  const ex = document.getElementById("explain");
+  ex.innerHTML = (i===item.a ? "✅ Right. " : "❌ ") + item.e;
+  ex.classList.add("show");
+  document.getElementById("nextBtn").disabled = false;
+  document.querySelector(".progress").textContent = "Score: "+score;
+}
+function nextQ(){ qi++; renderQuiz(); }
+function restartQuiz(){ qi=0; score=0; renderQuiz(); }
+
+/* ============ PACKAGES ============ */
+function renderPackages(){
+  document.getElementById("pkgList").innerHTML = packages.map(p=>
+    "<div class='pkg'><h3>"+p.name+"</h3><div class='price'>"+p.price+"</div>"+
+    "<div class='pkg-tag'>"+p.tag+"</div>"+
+    "<ul>"+p.items.map(i=>"<li>"+i+"</li>").join("")+"</ul>"+
+    "<div class='pkg-why'><b>Why this one over the tier below:</b> "+p.why+"</div></div>"
+  ).join("");
+}
+
+/* ============ NAV ============ */
+document.querySelectorAll(".nav-btn").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+    document.getElementById(b.dataset.view).classList.add("active");
+  };
+});
+
+/* init */
+renderCard(); renderQuiz(); renderPackages();
+</script>
+</body>
+</html>
