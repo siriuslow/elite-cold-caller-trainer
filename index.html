@@ -116,6 +116,19 @@
   .pkg-why{margin-top:14px; padding:12px 14px; border-radius:8px; background:rgba(240,136,62,.08); border-left:3px solid var(--accent); font-size:13px; line-height:1.5; color:var(--text)}
   .pkg-why b{color:var(--accent)}
   .todo{background:rgba(240,136,62,.1); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; font-size:13px; color:var(--accent); max-width:720px; margin-bottom:18px}
+  /* ---- How It Works (deep dive) ---- */
+  .dd{max-width:760px}
+  .dd-part{font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--accent); font-weight:700; margin:30px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line)}
+  .dd-part:first-of-type{margin-top:0}
+  .dd-item{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:14px}
+  .dd-item h3{font-size:16px; margin-bottom:10px; display:flex; align-items:flex-start; gap:11px; line-height:1.4}
+  .dd-item h3 .num{flex-shrink:0; width:24px; height:24px; border-radius:7px; background:var(--accent); color:#1a1206; font-size:13px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; margin-top:1px}
+  .dd-item p{font-size:14.5px; line-height:1.65; color:var(--dim); margin-bottom:9px}
+  .dd-item p:last-child{margin-bottom:0}
+  .dd-item b{color:var(--text)}
+  .dd-item .key{color:var(--accent); font-weight:700}
+  .dd-say{margin-top:10px; padding:11px 14px; border-radius:8px; background:rgba(240,136,62,.08); border-left:3px solid var(--accent); font-size:13.5px; line-height:1.55; color:var(--text)}
+  .dd-say b{color:var(--accent)}
   /* ---- Mobile ---- */
   @media(max-width:760px){
     body{flex-direction:column}
@@ -134,6 +147,7 @@
     <button class="nav-btn active" data-view="cards"><span class="ico">🃏</span> Flashcards</button>
     <button class="nav-btn" data-view="quiz"><span class="ico">✅</span> Quiz</button>
     <button class="nav-btn" data-view="packages"><span class="ico">📦</span> Packages</button>
+    <button class="nav-btn" data-view="howworks"><span class="ico">🔎</span> How It Works</button>
     <div class="side-foot">Two steps: the cold call <b style="color:var(--text)">books the meeting</b>, the meeting <b style="color:var(--text)">closes the deal</b>. Study until the pivots are automatic — the goal isn't reading a script, it's <b style="color:var(--text)">knowing why it works.</b></div>
   </nav>
 
@@ -188,6 +202,102 @@
       </div>
       <p class="sub" style="margin-top:22px">Each tier answers a different question: does he look professional, does he get found, does every lead get chased, or does he want to own it outright. Diagnose which one he's missing before you pitch.</p>
       <div id="pkgList"></div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="view" id="howworks">
+      <h1>How It All Works</h1>
+      <p class="sub">The full picture, plain English. Read this until you could explain any piece to your grandma — that's when you really know it.</p>
+      <div class="dd">
+
+        <div class="dd-part">Part 1 · How the systems actually work</div>
+
+        <div class="dd-item">
+          <h3><span class="num">1</span> What a website really is (domain + hosting)</h3>
+          <p>A website is just a bunch of files — the text, pictures, and pages. Those files have to live on a computer that's connected to the internet 24/7, called a <span class="key">server</span>. Renting space on that server is <span class="key">hosting</span>. The <span class="key">domain</span> (yourbusiness.com) is the address people type to find those files — like a street address that points to the building.</p>
+          <p>So we do three things: build the files, host them (keep them online), and point his domain at them. We build on a platform called <b>Base44</b> that lets us do this fast and professionally. On Growth and up, we connect his own .com to it.</p>
+          <p><b>Why this matters for the sale:</b> on the monthly plans, part of the fee keeps the hosting and address alive. If he cancels, we stop hosting — so the site's address goes dark. That's why only the $3,500 Ownership tier lets him keep it: he's paying to own the files and address outright.</p>
+          <div class="dd-say"><b>Say it simple:</b> "Your website is like a shop on Main Street. The monthly keeps the lights on and the doors open. Ownership is buying the building."</div>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">2</span> What "mobile-first" and "SEO-ready" mean</h3>
+          <p><span class="key">Mobile-first:</span> almost everyone searches on their phone, so we build the site to look perfect on a phone first, not just a computer. A site that's clunky on mobile loses the customer in about 3 seconds.</p>
+          <p><span class="key">SEO</span> stands for Search Engine Optimization — it just means setting the site up so Google can understand it and show it to the right people. "SEO-ready" means we fill in the behind-the-scenes labels (page titles, descriptions, a map of the pages) so Google knows exactly what he does and where he does it.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">3</span> What GoHighLevel actually is</h3>
+          <p>GoHighLevel is a software platform — a <span class="key">CRM</span> (customer relationship manager). Think of it as the contractor's lead command-center. We don't build it from scratch; we set up his own private account inside it and wire up the automations. His website forms and his phone number both connect into it, so every lead lands in one place instead of scattered across texts, voicemails, and sticky notes.</p>
+          <div class="dd-say"><b>Say it simple:</b> "It's one dashboard that catches every lead and chases it for you, so nothing gets forgotten."</div>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">4</span> How missed-call text-back actually fires</h3>
+          <p>His business number is connected to GoHighLevel. When a call comes in and he doesn't pick up — he's on a roof, it rings out — the system <b>detects the missed call</b> and instantly sends an automatic text to that caller: <i>"Hey, sorry I missed you — what can I help with?"</i></p>
+          <p>The customer texts back, and now that lead is a live conversation saved in his CRM — instead of that person just calling the next contractor. That's the whole trick: it turns a missed call (a lost job) into a text thread (a caught job), automatically, in seconds.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">5</span> The full lead loop (how it all connects)</h3>
+          <p>Here's the whole cycle, start to finish:</p>
+          <p>Someone searches → finds his <b>site or Google profile</b> → calls or fills a form → the lead lands in GoHighLevel as <b>"New"</b> → if he missed the call, <b>text-back fires</b> → if they don't book right away, <b>automatic follow-up texts and emails</b> go out over the next few days → he moves them through the pipeline <b>Contacted → Booked → Won</b> → after the job, a <b>review request auto-texts them</b> → more reviews push his <b>Google ranking higher</b> → more people find him → and it starts over.</p>
+          <p><b>The point:</b> it's a loop that feeds itself. Reviews lift ranking, ranking brings leads, the system catches the leads, caught leads become jobs, jobs become more reviews.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">6</span> How Google ranking really works (the "map pack")</h3>
+          <p>When someone searches "roofer near me," Google shows a little map with <span class="key">3 businesses pinned at the top</span> — that's the "map pack," and getting into those 3 is worth more than anything else online.</p>
+          <p>Google mostly decides who's in it by three things: (1) how complete and active his <b>Google Business Profile</b> is, (2) how many <b>recent reviews</b> he has, and (3) how relevant he is to the search — the right <b>keywords</b> and service area. Our review automation keeps fresh reviews flowing (the biggest lever), and we optimize his profile and keywords.</p>
+          <p>Notice: this is all <b>organic</b> — we never pay Google. That's why it keeps working month after month without a constant ad bill.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">7</span> Why we don't run ads (the actual reasoning)</h3>
+          <p>Ads mean you pay for every click, and the leads <b>stop the second you stop paying</b> — you're renting attention. What we build is an <b>asset that keeps working</b>: a site that ranks, reviews that stack up over time, and a system that catches every lead.</p>
+          <p>It's slower to start than ads, but it compounds and it's cheaper long-term. So when a contractor asks "do you run ads?" you're not dodging — you genuinely believe the organic + never-lose-a-lead approach beats renting clicks.</p>
+        </div>
+
+        <div class="dd-part">Part 2 · The full journey — yes → live → ongoing</div>
+
+        <div class="dd-item">
+          <h3><span class="num">1</span> The moment he says yes</h3>
+          <p><b>Payment link first</b> — this locks in the commitment while he's still excited. <b>Then the onboarding form</b> (elitetechmarketing.com/onboarding), a roughly 10-minute intake where he gives his business info, the pages he wants, his colors, his logo, and photos of his work.</p>
+          <p>That form <b>is the blueprint</b> for the whole build — everything we make comes from what he puts in it. Money first, then the form, and confirm he got both before you hang up.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">2</span> What we need from him (the real bottleneck)</h3>
+          <p>The #1 thing that slows a site down is <b>waiting on the client</b> — his photos, his logo, his content. The building itself is fast; the waiting is what drags.</p>
+          <p>So set the expectation right at the sale: "The faster you get me your pictures and details, the faster you're live — usually a week to two." That one sentence saves you a frustrated client later.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">3</span> How the site actually gets built</h3>
+          <p>Brandon builds it on Base44 straight from the onboarding form — the pages, the words, his branding and colors, and lead forms wired to text and email him whenever someone reaches out.</p>
+          <p>On <b>Growth and up</b>, we also connect his own custom domain and set up his Google Business Profile. On <b>Business Elite</b>, we build the entire GoHighLevel setup: his account, his phone number connected, the pipeline stages, missed-call text-back, the follow-up sequences, appointment reminders, review automation, and the website forms wired to flow into the CRM.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">4</span> What "publish" / "go live" means</h3>
+          <p>Once it's built, the site gets <span class="key">published</span> — it goes from a private draft only we can see to being <b>publicly online at his address</b>, where any customer can find it. That's what "live" means.</p>
+          <p>Whole thing takes <b>7 to 14 days</b>. He reviews the finished site, and we make any tweaks he wants before and after it goes live.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">5</span> What the monthly fee actually buys, every month</h3>
+          <p>This is the question every contractor really has — "what am I paying for each month?" Here's the honest answer:</p>
+          <p><b>Hosting + security</b> keeping the site online and safe. A <b>regular site check</b> so nothing quietly breaks. <b>Edits</b> when he needs them (2/mo on Essential, 7/mo on Growth, unlimited on Business Elite). And the big one on Business Elite — <b>the automation running:</b> text-backs firing, follow-ups going out, reminders sent, reviews being requested, leads getting tracked.</p>
+          <p>The monthly isn't for "the site sitting there." It's for <b>the system staying alive and working.</b> A website you build once and abandon slowly dies; the monthly is what keeps it a living machine.</p>
+        </div>
+
+        <div class="dd-item">
+          <h3><span class="num">6</span> Ongoing care after it's live</h3>
+          <p>It doesn't end at launch. There's a <b>monthly site inspection</b> (quarterly on the Ownership tier), and on the higher tiers we keep improving the site over time — it gets better, not stale.</p>
+          <p>Your job as the closer ends cleanly: once he's <b>sold, paid, and the onboarding form is submitted</b>, the building and setup is handled on Brandon's side. Make sure the client walks away knowing exactly what happens next — "you'll be live in 7 to 14 days, I've got it from here."</p>
+        </div>
+
+      </div>
     </section>
   </main>
 
