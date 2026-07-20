@@ -146,6 +146,7 @@
     <div class="tag">Cold Caller Trainer</div>
     <button class="nav-btn active" data-view="cards"><span class="ico">🃏</span> Flashcards</button>
     <button class="nav-btn" data-view="quiz"><span class="ico">✅</span> Quiz</button>
+    <button class="nav-btn" data-view="oquiz"><span class="ico">🧠</span> Objection Reads</button>
     <button class="nav-btn" data-view="packages"><span class="ico">📦</span> Packages</button>
     <button class="nav-btn" data-view="howworks"><span class="ico">🔎</span> How It Works</button>
     <div class="side-foot">Two steps: the cold call <b style="color:var(--text)">books the meeting</b>, the meeting <b style="color:var(--text)">closes the deal</b>. Study until the pivots are automatic — the goal isn't reading a script, it's <b style="color:var(--text)">knowing why it works.</b></div>
@@ -182,6 +183,14 @@
       <p class="sub">Knowledge + "what do you say when they said X." No skipping.</p>
       <div class="bar"><div class="bar-fill" id="barFill"></div></div>
       <div class="quiz-box" id="quizBox"></div>
+    </section>
+
+    <!-- ============ OBJECTION READS ============ -->
+    <section class="view" id="oquiz">
+      <h1>Objection Reads</h1>
+      <p class="sub">The other quiz asks <i>what do you say.</i> This one asks <b>why is he saying it</b> — what's happening around him, what he really means, what he's actually feeling. Read the situation first; the words are almost never the real thing.</p>
+      <div class="bar"><div class="bar-fill" id="obarFill"></div></div>
+      <div class="quiz-box" id="oquizBox"></div>
     </section>
 
     <!-- ============ PACKAGES ============ -->
@@ -725,6 +734,169 @@ const quiz = [
     e:"<b>Isolate + book a specific next step.</b> 'Think about it' hides the real objection — is it price or whether it works? Handle that, then lock 'I'll call Thursday at 10.' A vague 'reach out whenever' is a dead lead." },
 ];
 
+/* ============ OBJECTION READS (why he's really saying it) ============ */
+const oquiz = [
+  { q:"Five seconds in — before you've really said anything — he cuts you off: \"I'm not interested.\" What's actually going on?",
+    scenario:true,
+    opts:[
+      "He carefully weighed your offer and it's genuinely not for him.",
+      "It's a reflex. He says that to EVERY cold caller before hearing a word — it's a wall, not a decision, and it's not about you yet.",
+      "He's personally angry at you.",
+      "He already bought the exact same thing from a competitor." ],
+    a:1,
+    e:"<b>It's a pattern, not a verdict.</b> He hasn't heard anything to be uninterested IN — this is the automatic wall everyone throws up at a cold call. Don't take it literally. Acknowledge it and earn your 20 seconds: 'Totally fair, you don't know me yet — give me 20 seconds and if it's not for you I'm gone.'" },
+
+  { q:"\"I already have a website.\" Most of the time, what's underneath that?",
+    scenario:true,
+    opts:[
+      "A brush-off to end the call — and the site is often a dead business card that gets him nothing.",
+      "Solid proof he doesn't need more leads.",
+      "A carefully considered rejection of your service.",
+      "He's about to send you money." ],
+    a:0,
+    e:"<b>Usually a reflex to get you off the phone.</b> 'I have one' ≠ 'it works.' Your job is to find out which: 'Nice — is it actually bringing you jobs, or just sitting there?' That one question separates the polite brush-off from the truth, and 'it doesn't really do anything' is your opening." },
+
+  { q:"Ten seconds in he interrupts, a little impatient: \"Just tell me how much it is.\" What does that tone usually mean?",
+    scenario:true,
+    opts:[
+      "He's definitely going to say no.",
+      "He wants you to name the most expensive package.",
+      "He's actually a little interested — but guarding his wallet and testing how you handle it. Don't fumble it.",
+      "He's already hanging up no matter what you say." ],
+    a:2,
+    e:"<b>An early price question is often interest wearing a guard.</b> He's protecting his money and watching how you react. Don't blurt one number or panic-discount — that reads as weak. Give a range, anchor the value, steer to the meeting: 'Runs from about $500 up to a full lead system — that's exactly why I want 15 minutes.'" },
+
+  { q:"\"Just send me an email with some info.\" Nine times out of ten, this is really…",
+    scenario:true,
+    opts:[
+      "A strong buying signal.",
+      "A polite way to get you off the phone without saying 'no' to your face.",
+      "A request he genuinely intends to read carefully.",
+      "A sign he wants the premium package." ],
+    a:1,
+    e:"<b>It's the polite exit.</b> 'Email me' avoids the awkward no — and that email dies unread in his inbox. Don't just fire it off. Agree, but earn 90 seconds of discovery first: 'Happy to — quick so it's actually useful: what do you do, what area, and are you after more calls or just looking sharper?' Now the follow-up means something." },
+
+  { q:"What's the SITUATION that usually produces \"I'm too busy / I'm booked out\"?",
+    scenario:true,
+    opts:[
+      "His business is quietly dying.",
+      "He can't stand his customers.",
+      "Work is good right now, so he feels zero urgency — the pain is invisible while the phone's ringing.",
+      "He's testing whether you'll lower the price." ],
+    a:2,
+    e:"<b>Booked-out means the pain is invisible today.</b> That's the exact moment to build — the slow season always comes, and you want the machine running before the phone goes quiet. 'Perfect time to set it up while you're busy, so it's still working for you when things slow down — and it runs in the background, you do nothing.'" },
+
+  { q:"He picks up sounding short and irritated, machinery running in the background. Best READ + move?",
+    scenario:true,
+    opts:[
+      "He hates you — apologize and hang up.",
+      "Talk louder and push the full pitch through the noise.",
+      "He's mid-task on a job, not against you. Respect his time, be fast, and pin a specific callback.",
+      "Mark him as a dead lead." ],
+    a:2,
+    e:"<b>The irritation is the situation, not a judgment on you.</b> He's on a roof. Match it: 'Sounds like I caught you working — I'll be quick or grab a better time. Tomorrow at 8 before you start, or after 5?' Reading his environment keeps you from taking it personally and blowing an otherwise-live lead." },
+
+  { q:"\"I tried marketing before and it didn't work.\" What's the EMOTION under that?",
+    scenario:true,
+    opts:[
+      "Curiosity.",
+      "Excitement to try again.",
+      "He's been burned — distrust left over from a vendor who took his money and vanished.",
+      "Boredom." ],
+    a:2,
+    e:"<b>It's a scar, not a fact about you.</b> He got sold ads with no follow-up and lost money. Don't argue 'ours is better' — that just sounds like the last guy. Ask what he tried, validate the burn, then show the exact gap that sank it: nobody followed up on the leads. That missing piece is your whole differentiator." },
+
+  { q:"\"I'm not good with computers / I'm not tech-savvy.\" What's really happening?",
+    scenario:true,
+    opts:[
+      "He literally can't operate a phone.",
+      "Fear and insecurity — he's scared he'll have to learn and babysit a bunch of tech.",
+      "He's fishing for a discount.",
+      "He's insulting your product." ],
+    a:1,
+    e:"<b>It's a fear, not a real barrier — and it's a gift.</b> Hands-off is literally what you sell. 'Perfect — you never touch any of it. A few photos, a 10-minute form, and I build and run everything.' Turn the exact thing he's scared of into the reason to buy." },
+
+  { q:"\"It's too expensive.\" Most of the time, the real problem is…",
+    scenario:true,
+    opts:[
+      "He has no money at all.",
+      "He's trying to insult you.",
+      "The value hasn't landed yet — in his head the price feels bigger than what he'd get back.",
+      "He wants the cheapest thing on earth." ],
+    a:2,
+    e:"<b>Usually a value gap, not an empty bank account.</b> He hasn't felt what one extra job is worth. Don't cut the price — raise the value: 'One roof job is five to fifteen grand; this is under $300 a month. One extra job all year and it's paid for ten times over.' Fix the value side, not the price side." },
+
+  { q:"In the meeting, after hearing the whole thing, he says \"I need to think about it.\" This almost always means…",
+    scenario:true,
+    opts:[
+      "He genuinely needs three quiet days to reflect.",
+      "He's ready to buy and just being polite.",
+      "There's a specific unspoken objection hiding — usually the price, or a doubt it'll actually work.",
+      "He didn't understand a single word you said." ],
+    a:2,
+    e:"<b>It's a curtain over the real objection.</b> Gently pull it back: 'Fair — is it more the price you'd want to sit with, or whether it'll actually work for you?' Handle THAT, then lock a specific next time. Letting it end on a vague 'I'll think about it' is how live deals quietly die." },
+
+  { q:"\"Let me run it by my wife / my partner.\" How should you read it?",
+    scenario:true,
+    opts:[
+      "Always a flat-out stall — ignore it and keep pushing.",
+      "Could be real OR a soft exit. Isolate the real hesitation now, then book a firm follow-up with both of them.",
+      "It means he'll never buy — move on.",
+      "It means the price is fine and you've won." ],
+    a:1,
+    e:"<b>Sometimes real, sometimes a polite door.</b> Don't accept a vague 'I'll get back to you.' Find the actual hesitation first — 'Totally fair; when you talk, is it the price or whether it'll work that you'd run by them?' Then set a specific time: 'Want me to call Thursday at 10 so it's fresh?'" },
+
+  { q:"\"I get all my work from referrals.\" What's the mindset / situation behind it?",
+    scenario:true,
+    opts:[
+      "He's lying to get rid of you.",
+      "He's desperate and hiding it.",
+      "He's genuinely comfortable right now and feels no pain — with a little pride mixed in.",
+      "He wants you to trash his referral sources." ],
+    a:2,
+    e:"<b>Real comfort plus pride — respect both, don't attack them.</b> Then reveal the hidden leak: the moment someone's referred, the first thing they do is Google his name. Nothing professional showing up and he looks smaller than he is — and loses them. You're not replacing referrals, you're catching the ones leaking out the bottom." },
+
+  { q:"\"Who else have you done this for?\" Underneath the question, what is he really after?",
+    scenario:true,
+    opts:[
+      "Idle gossip about your other clients.",
+      "Safety — proof he won't be the guinea pig who wastes his money.",
+      "Your company's full history.",
+      "A reason to negotiate the price down." ],
+    a:1,
+    e:"<b>It's a risk question.</b> He's asking 'will I look foolish for being first?' Give the real client honestly — Polished by Glizzy &amp; Glam — then reframe early-adopter as the advantage (better price, founder's full attention) and lean on the proven mechanism (text-back, reviews, ranking work everywhere). Calm honesty shrinks the risk he's feeling." },
+
+  { q:"\"Do you run Facebook or Google ads?\" Often this isn't even an objection — it's…",
+    scenario:true,
+    opts:[
+      "A trap to catch you lying.",
+      "A demand that you must run ads or he walks.",
+      "A knowledge gap — to him, 'marketing' just means ads, because that's the only kind he's ever seen.",
+      "A sign he's an expert testing you." ],
+    a:2,
+    e:"<b>He's not insisting on ads — he just doesn't know another way exists.</b> Teach it simply: 'We don't run ads — those stop the second you stop paying. We get you found with real reviews on Google and catch every lead, so it keeps working month after month.' Educate the difference instead of just saying no." },
+
+  { q:"In the meeting you name the price and he goes silent for a few seconds. The RIGHT read is…",
+    scenario:true,
+    opts:[
+      "Silence means no — rescue it fast with a discount.",
+      "He's offended — apologize.",
+      "He's doing the math and weighing it. Let the silence work — don't jump in.",
+      "He didn't hear you — repeat the price louder." ],
+    a:2,
+    e:"<b>Post-price silence is thinking, not rejection.</b> Whoever talks first usually loses. If you fill it, you'll re-pitch or discount and telegraph weakness. Hold the quiet and let him land on the decision himself — that pause is doing your closing for you." },
+
+  { q:"The single skill this whole quiz is drilling — what is it?",
+    scenario:true,
+    opts:[
+      "Memorizing every script word-for-word.",
+      "Talking faster than the customer so he can't object.",
+      "Reading WHY he's saying it — the situation and the emotion under the words — then answering the real thing.",
+      "Always being ready to drop the price." ],
+    a:2,
+    e:"<b>Objections are almost never literal.</b> 'Not interested,' 'too expensive,' 'email me,' 'I'll think about it' are surface words hiding a reflex, a wallet-guard, a burn, or a fear. Diagnose the real driver underneath and answer THAT — do it well and you'll handle 90% of everything you hear on the phone." },
+];
+
 /* ============ FLASHCARDS ============ */
 let deck = "concepts", idx = 0, flipped = false;
 function currentDeck(){
@@ -784,7 +956,7 @@ function pick(i){
   if(answered) return;
   answered = true;
   const item = quiz[qi];
-  const opts = document.querySelectorAll(".opt");
+  const opts = document.querySelectorAll("#quizBox .opt");
   opts.forEach(o=>o.disabled=true);
   opts[item.a].classList.add("correct");
   if(i === item.a){ score++; }
@@ -793,10 +965,49 @@ function pick(i){
   ex.innerHTML = (i===item.a ? "✅ Right. " : "❌ ") + item.e;
   ex.classList.add("show");
   document.getElementById("nextBtn").disabled = false;
-  document.querySelector(".progress").textContent = "Score: "+score;
+  document.querySelector("#quizBox .progress").textContent = "Score: "+score;
 }
 function nextQ(){ qi++; renderQuiz(); }
 function restartQuiz(){ qi=0; score=0; renderQuiz(); }
+
+/* ============ OBJECTION READS QUIZ (separate engine) ============ */
+let oqi = 0, oscore = 0, oanswered = false;
+function renderOQuiz(){
+  const box = document.getElementById("oquizBox");
+  document.getElementById("obarFill").style.width = (oqi/oquiz.length*100)+"%";
+  if(oqi >= oquiz.length){
+    const pct = Math.round(oscore/oquiz.length*100);
+    let msg = pct>=90 ? "He reads people, not scripts. Ready." : pct>=70 ? "Good instincts — drill the misses." : "Re-read the Objections deck, then run it again.";
+    box.innerHTML = "<div class='result'><div class='score'>"+oscore+" / "+oquiz.length+"</div><div class='msg'>"+pct+"% — "+msg+"</div><button onclick='restartOQuiz()'>Try Again</button></div>";
+    document.getElementById("obarFill").style.width = "100%";
+    return;
+  }
+  const item = oquiz[oqi];
+  oanswered = false;
+  let html = "<div class='qcard'><div class='qkicker'>Read the situation · Q"+(oqi+1)+" of "+oquiz.length+"</div>";
+  html += "<div class='qtext'>"+item.q+"</div>";
+  item.opts.forEach((o,i)=>{ html += "<button class='opt' data-i='"+i+"' onclick='opick("+i+")'>"+o+"</button>"; });
+  html += "<div class='explain' id='oexplain'></div>";
+  html += "<div class='quiz-foot'><button id='oNextBtn' onclick='oNextQ()' disabled>Next →</button><span class='progress'>Score: "+oscore+"</span></div></div>";
+  box.innerHTML = html;
+}
+function opick(i){
+  if(oanswered) return;
+  oanswered = true;
+  const item = oquiz[oqi];
+  const opts = document.querySelectorAll("#oquizBox .opt");
+  opts.forEach(o=>o.disabled=true);
+  opts[item.a].classList.add("correct");
+  if(i === item.a){ oscore++; }
+  else { opts[i].classList.add("wrong"); }
+  const ex = document.getElementById("oexplain");
+  ex.innerHTML = (i===item.a ? "✅ Right. " : "❌ ") + item.e;
+  ex.classList.add("show");
+  document.getElementById("oNextBtn").disabled = false;
+  document.querySelector("#oquizBox .progress").textContent = "Score: "+oscore;
+}
+function oNextQ(){ oqi++; renderOQuiz(); }
+function restartOQuiz(){ oqi=0; oscore=0; renderOQuiz(); }
 
 /* ============ PACKAGES ============ */
 function renderPackages(){
@@ -819,7 +1030,7 @@ document.querySelectorAll(".nav-btn").forEach(b=>{
 });
 
 /* init */
-renderCard(); renderQuiz(); renderPackages();
+renderCard(); renderQuiz(); renderOQuiz(); renderPackages();
 </script>
 </body>
 </html>
