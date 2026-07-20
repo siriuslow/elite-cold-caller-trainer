@@ -353,8 +353,8 @@ const concepts = [
 
 const coldcall = [
   { k:"Cold Call · Step 1",
-    front:"The Opener — first 20 seconds (goal: earn a meeting, not sell)",
-    back:"<span class='lead'>Be upfront, ask permission, buy 20 seconds.</span> 'Hey [name], this is [your name] with Elite Tech Marketing — I'll be honest, this is a cold call. Give me 20 seconds and if it's not for you I'll let you go, fair enough?' … (yes) 'I help contractors around [town] show up on Google and stop losing jobs to missed calls.' <b>Honesty disarms them. And remember — the cold call's ONLY job is to book a short meeting, not to close.</b>" },
+    front:"The Opener — first 30 seconds (goal: earn a meeting, not sell)",
+    back:"<span class='lead'>Be real, get permission, hook curiosity — but NEVER say the words 'cold call' and NEVER frame your own exit.</span> 'Hey [name], you don't know me — I'll keep it quick. I work with contractors around [town]. Is right now a bad time, or can I grab 30 seconds?' … (go ahead) 'Real reason I called — most guys around here lose half their calls when they're up on a roof, and that job goes to the next guy. That's exactly what I fix. Worth me showing you what it'd look like for [business]?' <b>'You don't know me' disarms WITHOUT handing him the trigger word 'cold call.' 'Is now a bad time?' — people love to say no, so 'no, go ahead' is an easy yes. Then hook a real problem, not a countdown. The call's ONLY job is to book the meeting.</b>" },
   { k:"Cold Call · Step 2",
     front:"Light discovery — find ONE nerve (keep it short)",
     back:"<span class='lead'>You're not diagnosing the whole business yet — you just need one real problem to hook the meeting.</span> Ask one or two: 'Do you have a website that's actually bringing you jobs?' / 'When you're on a job and miss a call, what happens to that lead?' The moment he admits a leak — 'yeah, I miss a ton of calls' — <b>that's your reason for the meeting.</b> Don't full-pitch here." },
@@ -501,11 +501,20 @@ const quiz = [
     scenario:true,
     opts:[
       "Launch straight into the full pitch, fast.",
-      "Be upfront it's a cold call, ask for 20 seconds, then say who you help and how.",
+      "Be real ('you don't know me'), ask 'is now a bad time?', then hook him with a problem he actually has.",
       "Pretend you were referred by someone.",
-      "Ask 'how are you doing today?' and wait." ],
+      "Announce 'this is a cold call, give me 20 seconds and I'll let you go.'" ],
     a:1,
-    e:"<b>Honesty + permission.</b> 'This is a cold call, give me 20 seconds and I'll let you go, fair?' disarms them and earns a small yes. Then one line on who you help. Don't fake a referral, don't dump the pitch." },
+    e:"<b>Real + permission + curiosity.</b> 'You don't know me, I'll keep it quick… is now a bad time?' disarms him without the trigger words 'cold call,' and 'bad time?' earns an easy 'no, go ahead.' Then hook a real problem (missed calls = lost jobs). Never fake a referral, never dump the pitch." },
+  { q:"Why should you NOT open with \"I'll be honest, this is a cold call — give me 20 seconds and I'll let you go\"?",
+    scenario:true,
+    opts:[
+      "It's too polite to work.",
+      "Saying 'cold call' triggers the hang-up reflex, and 'I'll let you go' makes escaping the goal — he just waits you out.",
+      "It's against the rules to admit it.",
+      "20 seconds isn't enough time." ],
+    a:1,
+    e:"<b>You hand him the trigger word AND pre-negotiate your own exit.</b> 'Cold call' drops the shutter; 'I'll let you go' turns it into a countdown he waits out instead of getting curious. Stay honest with 'you don't know me,' ask 'is now a bad time?', and hook a real problem instead." },
   { q:"On the cold call he asks: \"Just tell me what it costs.\" Best move?",
     scenario:true,
     opts:[
