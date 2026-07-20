@@ -129,6 +129,16 @@
   .dd-item .key{color:var(--accent); font-weight:700}
   .dd-say{margin-top:10px; padding:11px 14px; border-radius:8px; background:rgba(240,136,62,.08); border-left:3px solid var(--accent); font-size:13.5px; line-height:1.55; color:var(--text)}
   .dd-say b{color:var(--accent)}
+  /* ---- Drill ---- */
+  .drill-stats{display:flex; gap:14px; margin-bottom:18px; max-width:720px}
+  .drill-stat{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 10px; flex:1; text-align:center}
+  .drill-stat .n{font-size:26px; font-weight:800; color:var(--accent); line-height:1}
+  .drill-stat .l{font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:1px; margin-top:6px}
+  .drill-say{font-size:14px; color:var(--dim); margin:18px 0 0; line-height:1.5}
+  .grade-row{display:flex; gap:12px; margin-top:18px}
+  .grade-btn{flex:1; border:none; padding:14px; border-radius:10px; font-weight:700; font-size:15px; cursor:pointer}
+  .grade-nailed{background:rgba(63,185,80,.15); border:1px solid var(--green); color:var(--green)}
+  .grade-fumbled{background:rgba(248,81,73,.13); border:1px solid var(--red); color:var(--red)}
   /* ---- Mobile ---- */
   @media(max-width:760px){
     body{flex-direction:column}
@@ -147,6 +157,7 @@
     <button class="nav-btn active" data-view="cards"><span class="ico">🃏</span> Flashcards</button>
     <button class="nav-btn" data-view="quiz"><span class="ico">✅</span> Quiz</button>
     <button class="nav-btn" data-view="oquiz"><span class="ico">🧠</span> Objection Reads</button>
+    <button class="nav-btn" data-view="drill"><span class="ico">🎤</span> Drill</button>
     <button class="nav-btn" data-view="packages"><span class="ico">📦</span> Packages</button>
     <button class="nav-btn" data-view="howworks"><span class="ico">🔎</span> How It Works</button>
     <div class="side-foot">Two steps: the cold call <b style="color:var(--text)">books the meeting</b>, the meeting <b style="color:var(--text)">closes the deal</b>. Study until the pivots are automatic — the goal isn't reading a script, it's <b style="color:var(--text)">knowing why it works.</b></div>
@@ -191,6 +202,14 @@
       <p class="sub">The other quiz asks <i>what do you say.</i> This one asks <b>why is he saying it</b> — what's happening around him, what he really means, what he's actually feeling. Read the situation first; the words are almost never the real thing.</p>
       <div class="bar"><div class="bar-fill" id="obarFill"></div></div>
       <div class="quiz-box" id="oquizBox"></div>
+    </section>
+
+    <!-- ============ DRILL ============ -->
+    <section class="view" id="drill">
+      <h1>Objection Drill</h1>
+      <p class="sub">This is where it sticks. Read the line he throws at you, then say your comeback <b>OUT LOUD</b> — like he's really on the phone. Then reveal the play and grade yourself honest. No multiple choice; on a real call nobody hands you four options.</p>
+      <div class="drill-stats" id="drillStats"></div>
+      <div class="quiz-box" id="drillBox"></div>
     </section>
 
     <!-- ============ PACKAGES ============ -->
@@ -1018,6 +1037,47 @@ function opick(i){
 function oNextQ(){ oqi++; renderOQuiz(); }
 function restartOQuiz(){ oqi=0; oscore=0; renderOQuiz(); }
 
+/* ============ OBJECTION DRILL (say it out loud) ============ */
+let drillQueue = [], drillIdx = null, drillReveal = false, drillStreak = 0, drillBest = 0, drillDone = 0;
+function shuffleDrill(){
+  drillQueue = objections.map((_,i)=>i);
+  for(let i=drillQueue.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [drillQueue[i],drillQueue[j]]=[drillQueue[j],drillQueue[i]]; }
+}
+function nextDrill(){
+  if(drillQueue.length===0) shuffleDrill();
+  drillIdx = drillQueue.shift();
+  drillReveal = false;
+  renderDrill();
+}
+function renderDrillStats(){
+  document.getElementById("drillStats").innerHTML =
+    "<div class='drill-stat'><div class='n'>"+drillStreak+"</div><div class='l'>Streak</div></div>"+
+    "<div class='drill-stat'><div class='n'>"+drillBest+"</div><div class='l'>Best</div></div>"+
+    "<div class='drill-stat'><div class='n'>"+drillDone+"</div><div class='l'>Drilled</div></div>";
+}
+function renderDrill(){
+  renderDrillStats();
+  const c = objections[drillIdx];
+  let html = "<div class='qcard'><div class='qkicker'>He throws at you…</div>";
+  html += "<div class='qtext'>"+c.front+"</div>";
+  if(!drillReveal){
+    html += "<p class='drill-say'>🎤 Say your comeback OUT LOUD, like he's on the line. Don't read it in your head — talk. Then reveal the play.</p>";
+    html += "<div class='quiz-foot'><button onclick='revealDrill()'>Show the play →</button></div>";
+  } else {
+    html += "<div class='explain show'>"+c.back+"</div>";
+    html += "<div class='grade-row'><button class='grade-btn grade-nailed' onclick='gradeDrill(true)'>✅ Nailed it</button><button class='grade-btn grade-fumbled' onclick='gradeDrill(false)'>↺ Fumbled</button></div>";
+  }
+  html += "</div>";
+  document.getElementById("drillBox").innerHTML = html;
+}
+function revealDrill(){ drillReveal = true; renderDrill(); }
+function gradeDrill(ok){
+  drillDone++;
+  if(ok){ drillStreak++; if(drillStreak>drillBest) drillBest=drillStreak; }
+  else { drillStreak=0; drillQueue.splice(Math.min(drillQueue.length,3),0,drillIdx); } // bring a fumble back around soon
+  nextDrill();
+}
+
 /* ============ PACKAGES ============ */
 function renderPackages(){
   document.getElementById("pkgList").innerHTML = packages.map(p=>
@@ -1039,7 +1099,7 @@ document.querySelectorAll(".nav-btn").forEach(b=>{
 });
 
 /* init */
-renderCard(); renderQuiz(); renderOQuiz(); renderPackages();
+renderCard(); renderQuiz(); renderOQuiz(); renderPackages(); nextDrill();
 </script>
 </body>
 </html>
